@@ -19,7 +19,7 @@ const FeaturedArtworks = () => {
       });
   }, []);
 
-  console.log(artworks);
+//   console.log(artworks);
 
   if (loading) {
     return (
@@ -52,7 +52,7 @@ const FeaturedArtworks = () => {
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {artworks.map((artwork, index) => (
+          {artworks.slice(0, 6).map((artwork, index) => (
             <div
               key={index}
               className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"

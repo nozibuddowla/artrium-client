@@ -3,7 +3,6 @@
   themes: light --default;
 }
 
-
 /* slider */
 .slider-container {
   width: 100%;
@@ -98,7 +97,6 @@
   animation: shimmer 2s infinite;
 }
 
-
 /* not found page */
 @keyframes float {
   0%,
@@ -180,4 +178,81 @@
   .art-404 {
     font-size: 6rem;
   }
+}
+
+
+/* top artists */
+@keyframes blob {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(20px, -20px) scale(1.1);
+  }
+  50% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  75% {
+    transform: translate(20px, 20px) scale(1.05);
+  }
+}
+
+.animate-blob {
+  animation: blob 10s infinite ease-in-out;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.artist-card {
+  animation: float-up 0.6s ease-out forwards;
+}
+
+.artist-card:nth-child(1) {
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+.artist-card:nth-child(2) {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+.artist-card:nth-child(3) {
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+.artist-card:nth-child(4) {
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+@keyframes shine {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.rank-badge {
+  background: linear-gradient(90deg, #fbbf24, #f59e0b, #fbbf24);
+  background-size: 200% auto;
+  animation: shine 3s linear infinite;
 }
