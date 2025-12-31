@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import MyContainer from "./MyContainer";
+import MyContainer from "../components/MyContainer";
 import { Link } from "react-router";
 
-const FeaturedArtworks = () => {
+const ArtWorks = () => {
   const [artworks, setArtworks] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -18,8 +18,6 @@ const FeaturedArtworks = () => {
         setLoading(false);
       });
   }, []);
-
-//   console.log(artworks);
 
   if (loading) {
     return (
@@ -48,11 +46,11 @@ const FeaturedArtworks = () => {
     <div className="my-16">
       <MyContainer>
         <h3 className="text-3xl font-bold text-center mb-12 text-gray-800">
-          Featured Artworks
+          Explore Artworks
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {artworks.slice(0, 6).map((artwork, index) => (
+          {artworks.map((artwork, index) => (
             <div
               key={index}
               className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
@@ -102,21 +100,9 @@ const FeaturedArtworks = () => {
             </div>
           ))}
         </div>
-
-        {/* View All Button */}
-        {artworks.length > 0 && (
-          <div className="text-center mt-12">
-            <Link
-              to="/exploreArtworks"
-              className="inline-block px-8 py-3 bg-white text-purple-600 font-semibold rounded-full border-2 border-purple-600 hover:bg-purple-100 transition-all duration-300"
-            >
-              Explore More Artworks →
-            </Link>
-          </div>
-        )}
       </MyContainer>
     </div>
   );
 };
 
-export default FeaturedArtworks;
+export default ArtWorks;
