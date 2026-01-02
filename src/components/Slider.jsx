@@ -1,5 +1,5 @@
 import React from "react";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -11,12 +11,27 @@ import "swiper/css/effect-fade";
 import slide1 from "../assets/slide-1.jpg";
 import slide2 from "../assets/slide-2.jpg";
 import slide3 from "../assets/slide-3.jpg";
-import slide4 from "../assets/slide-4.jpg";
-import slide5 from "../assets/slide-5.jpg";
-import slide6 from "../assets/slide-6.jpg";
-import slide7 from "../assets/slide-7.jpg";
-import slide8 from "../assets/slide-8.jpg";
-import slide9 from "../assets/slide-9.jpg";
+
+const slides = [
+  {
+    id: 1,
+    image: slide1,
+    subtitle: "Art & Design",
+    title: "Let Your Walls Tell Stories",
+  },
+  {
+    id: 2,
+    image: slide2,
+    subtitle: "Transform Your Space",
+    title: "Your Online Shop for Wall Art",
+  },
+  {
+    id: 3,
+    image: slide3,
+    subtitle: "New Collection",
+    title: "Art Prints For Stylish Interiors",
+  },
+];
 
 const Slider = () => {
   return (
@@ -27,14 +42,15 @@ const Slider = () => {
         loop={true}
         grabCursor={true}
         autoplay={{
-          delay: 2000,
+          delay: 4000,
           disableOnInteraction: false,
         }}
         pagination={{
           dynamicBullets: true,
           clickable: true,
         }}
-        modules={[Autoplay, Pagination]}
+        modules={[Autoplay, Pagination, EffectFade]}
+        effect="fade"
         className="mySwiper"
         breakpoints={{
           320: {
@@ -51,50 +67,18 @@ const Slider = () => {
           },
         }}
       >
-        <SwiperSlide>
-          <img src={slide1} alt="" loading="lazy" />
-          <div className="slide-overlay"></div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slide2} alt="" loading="lazy" />
-          <div className="slide-overlay"></div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src={slide3}
-            alt="Drone Light Show Over City Skyline at Night"
-            loading="lazy"
-          />
-          <div className="slide-overlay"></div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slide4} alt="" loading="lazy" />
-          <div className="slide-overlay"></div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slide5} alt="" loading="lazy" />
-          <div className="slide-overlay"></div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slide6} alt="" loading="lazy" />
-          <div className="slide-overlay"></div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src={slide7}
-            alt="Bright Yellow Frog on a Woodland Log"
-            loading="lazy"
-          />
-          <div className="slide-overlay"></div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slide8} alt="" loading="lazy" />
-          <div className="slide-overlay"></div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slide9} alt="" loading="lazy" />
-          <div className="slide-overlay"></div>
-        </SwiperSlide>
+        {slides.map((slide) => (
+          <SwiperSlide key={slide.id}>
+            <div>
+              <img src={slide.image} alt={slide.title} />
+
+              <div className="absolute inset-0 bg-black/10 flex flex-col items-center justify-center text-center px-4">
+                <span className="slide-subtitle">{slide.subtitle}</span>
+                <h2 className="slide-title">{slide.title}</h2>
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

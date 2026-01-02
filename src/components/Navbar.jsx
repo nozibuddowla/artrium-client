@@ -145,7 +145,7 @@ const Navbar = () => {
               Login
             </Link>
             <Link
-              to="/register"
+              to="/signup"
               className="btn bg-linear-to-br from-[#632ee3] to-[#9f62f2] text-white px-2 py-1.5 font-semibold leading-5"
             >
               Register

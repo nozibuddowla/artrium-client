@@ -133,7 +133,7 @@ const TopArtists = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
           {artists.map((artist, index) => (
-            <div key={artist._id} className="artist-card group text-center">
+            <div key={index} className="artist-card group text-center">
               <div className="relative inline-block mb-4">
                 {/* Animated Rank Badge */}
                 <div className="absolute -top-2 -left-2 w-10 h-10 rank-badge rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg z-10 transform group-hover:scale-110 transition-transform duration-300">

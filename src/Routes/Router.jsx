@@ -4,6 +4,8 @@ import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/Home";
 import NotFoundPage from "../pages/NotFoundPage";
 import ArtWorks from "../pages/ArtWorks";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
       {
         path: "/exploreArtworks",
         element: <ArtWorks />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <Register />,
       },
     ],
   },

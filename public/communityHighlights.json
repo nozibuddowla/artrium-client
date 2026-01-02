@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Digital Art Challenge Winners Announced!",
+    "description": "Congratulations to all participants in our monthly digital art challenge. The creativity and skill displayed were absolutely outstanding!",
+    "imageUrl": "https://images.unsplash.com/photo-1634986666676-ec8fd927c23d?w=800",
+    "type": "achievement",
+    "authorName": "Artrium Team",
+    "authorAvatar": "https://i.pravatar.cc/150?img=20",
+    "likes": 342,
+    "comments": 87,
+    "timeAgo": "2 days ago",
+    "createdAt": "2025-12-29T10:30:00Z"
+  },
+  {
+    "title": "Trending: Abstract Expressionism Making a Comeback",
+    "description": "Abstract expressionism is experiencing a major revival in our community, with artists creating stunning modern interpretations of classic techniques.",
+    "imageUrl": "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800",
+    "type": "trending",
+    "authorName": "Art Curator",
+    "authorAvatar": "https://i.pravatar.cc/150?img=25",
+    "likes": 528,
+    "comments": 143,
+    "timeAgo": "5 hours ago",
+    "createdAt": "2025-12-31T08:15:00Z"
+  },
+  {
+    "title": "Featured Collection: Ocean Depths",
+    "description": "Dive into this curated collection of marine-inspired artworks that capture the beauty and mystery of underwater worlds.",
+    "imageUrl": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800",
+    "type": "featured",
+    "authorName": "Gallery Director",
+    "authorAvatar": "https://i.pravatar.cc/150?img=30",
+    "likes": 467,
+    "comments": 92,
+    "timeAgo": "1 day ago",
+    "createdAt": "2025-12-30T14:20:00Z"
+  }
+]
