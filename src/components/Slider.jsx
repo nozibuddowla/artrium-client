@@ -69,7 +69,7 @@ const Slider = () => {
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
-            <div>
+            <div className="relative w-full h-full">
               <img src={slide.image} alt={slide.title} />
 
               <div className="absolute inset-0 bg-black/10 flex flex-col items-center justify-center text-center px-4">
