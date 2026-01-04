@@ -6,6 +6,7 @@ Create an online art-sharing platform where artists can upload and display their
 
 ## 🌐 Live Demo  
 🔗 **[https://artrium-tourmaline.netlify.app/](https://artrium-tourmaline.netlify.app/)**
+🔗 **[https://artrium-b059f.web.app/](https://artrium-b059f.web.app/)**
 
 ---
 
