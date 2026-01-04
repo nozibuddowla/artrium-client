@@ -1,5 +1,6 @@
 [
   {
+    "artworkId": "artwork_001",
     "imageUrl": "https://images.unsplash.com/photo-1729974354467-cc02e2f47a8b?q=80&w=1267&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Abstract Harmony",
     "artistName": "Elena Rodriguez",
@@ -12,6 +13,7 @@
     "createdAt": "2025-12-30T10:30:00Z"
   },
   {
+    "artworkId": "artwork_002",
     "imageUrl": "https://images.unsplash.com/photo-1767080208178-9eabc0cc9472?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Urban Sunset",
     "artistName": "Marcus Chen",
@@ -24,6 +26,7 @@
     "createdAt": "2025-12-29T15:45:00Z"
   },
   {
+    "artworkId": "artwork_003",
     "imageUrl": "https://images.unsplash.com/photo-1766682117531-17a55cde82c3?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Ethereal Dreams",
     "artistName": "Sophie Laurent",
@@ -36,6 +39,7 @@
     "createdAt": "2025-12-28T09:20:00Z"
   },
   {
+    "artworkId": "artwork_004",
     "imageUrl": "https://images.unsplash.com/photo-1763825153323-ec77084e27a0?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Geometric Serenity",
     "artistName": "David Kim",
@@ -48,6 +52,7 @@
     "createdAt": "2025-12-27T14:10:00Z"
   },
   {
+    "artworkId": "artwork_005",
     "imageUrl": "https://images.unsplash.com/photo-1621097923771-5921308957df?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Ocean's Whisper",
     "artistName": "Isabella Santos",
@@ -60,6 +65,7 @@
     "createdAt": "2025-12-26T11:30:00Z"
   },
   {
+    "artworkId": "artwork_006",
     "imageUrl": "https://images.unsplash.com/photo-1664746789655-17910f61053b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Midnight Garden",
     "artistName": "James Morrison",
@@ -72,6 +78,7 @@
     "createdAt": "2025-12-25T16:45:00Z"
   },
   {
+    "artworkId": "artwork_007",
     "imageUrl": "https://images.unsplash.com/photo-1764601080562-a96dacf18cf7?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Crimson Passion",
     "artistName": "Aria Nakamura",
@@ -84,6 +91,7 @@
     "createdAt": "2025-12-24T08:15:00Z"
   },
   {
+    "artworkId": "artwork_008",
     "imageUrl": "https://images.unsplash.com/photo-1693423362454-7db6c8e07a5c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Portrait of Resilience",
     "artistName": "Michael Okonkwo",
@@ -96,6 +104,7 @@
     "createdAt": "2025-12-23T13:00:00Z"
   },
   {
+    "artworkId": "artwork_009",
     "imageUrl": "https://images.unsplash.com/photo-1587403310983-968055703d5a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Celestial Dance",
     "artistName": "Luna Martinez",
@@ -108,6 +117,7 @@
     "createdAt": "2025-12-22T10:40:00Z"
   },
   {
+    "artworkId": "artwork_010",
     "imageUrl": "https://images.unsplash.com/photo-1753223386004-6485ef89db5e?q=80&w=1158&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Industrial Echo",
     "artistName": "Thomas Berg",
@@ -120,6 +130,7 @@
     "createdAt": "2025-12-21T17:20:00Z"
   },
   {
+    "artworkId": "artwork_011",
     "imageUrl": "https://images.unsplash.com/photo-1744933722741-eff4cf5538b6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Autumn Reverie",
     "artistName": "Olivia Thompson",
@@ -132,6 +143,7 @@
     "createdAt": "2025-12-20T12:05:00Z"
   },
   {
+    "artworkId": "artwork_012",
     "imageUrl": "https://images.unsplash.com/photo-1637599973737-baf12200749e?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Fragments of Memory",
     "artistName": "Rafael Costa",

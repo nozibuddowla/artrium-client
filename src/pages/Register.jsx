@@ -90,11 +90,12 @@ const Register = () => {
   // console.log(user);
 
   // Handle Google Sign in
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignUp = () => {
     signInWithGoogle()
       .then((result) => {
+        setUser(result.user);
         toast.success("Successfully signed in with Google!");
-        navigate(from, { replace: true });
+        navigate("/");
       })
       .catch((error) => {
         console.error("Google sign-in error:", error);
@@ -176,11 +177,25 @@ const Register = () => {
                     className="w-full px-6 py-4 bg-[#F7F7F7] rounded-full border-none focus:ring-2 focus:ring-gray-200 outline-none placeholder:text-gray-400 text-gray-700 transition-all"
                     required
                   />
-                  <button type="button"
-                  onClick={() => setShow(!show)}  className="absolute right-4 top-1/3">
+                  <button
+                    type="button"
+                    onClick={() => setShow(!show)}
+                    className="absolute right-4 top-1/3"
+                  >
                     {show ? <IoEye /> : <IoEyeOff />}{" "}
                   </button>
                 </div>
+
+                {passwordError && (
+                  <p className="text-red-500 text-sm mt-2 ml-4">
+                    {passwordError}
+                  </p>
+                )}
+
+                <p className="text-gray-500 text-xs mt-2 ml-4">
+                  Must contain: uppercase, lowercase letter, and minimum 6
+                  characters
+                </p>
               </div>
 
               <div className="w-full flex items-center gap-2">
@@ -209,7 +224,7 @@ const Register = () => {
               {/* Google Sign In Button */}
               <button
                 type="button"
-                onClick={handleGoogleSignIn}
+                onClick={handleGoogleSignUp}
                 className="btn w-full py-4 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center gap-3 hover:bg-gray-50 transition-all duration-300 font-semibold text-gray-700"
               >
                 <svg className="w-6 h-6" viewBox="0 0 24 24">

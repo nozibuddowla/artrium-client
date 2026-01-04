@@ -157,6 +157,20 @@ const Navbar = () => {
                 </li>
                 <div className="divider my-1"></div>
                 <li>
+                  {" "}
+                  <NavLink
+                    to="/myProfile"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-purple-600 font-bold"
+                        : "font-medium hover:text-purple-600"
+                    }
+                  >
+                    My Profile
+                  </NavLink>{" "}
+                </li>
+                <div className="divider my-1"></div>
+                <li>
                   <button
                     onClick={handleSignOut}
                     className="text-red-600 hover:bg-red-50 flex items-center gap-3"

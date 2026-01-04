@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MyContainer from "../components/MyContainer";
 import { Link } from "react-router";
+import { motion } from "motion/react";
 
 const ArtWorks = () => {
   const [artworks, setArtworks] = useState([]);
@@ -50,9 +51,11 @@ const ArtWorks = () => {
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {artworks.map((artwork, index) => (
-            <div
-              key={index}
+          {artworks.map((artwork) => (
+            <motion.div
+              key={artwork.artworkId}
+              initial={{ scale: 0.5 }}
+              animate={{ scale: 1, transition: { duration: 0.5 } }}
               className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
             >
               {/* Image */}
@@ -91,13 +94,13 @@ const ArtWorks = () => {
 
                 {/* View Details Button */}
                 <Link
-                  to={`/artwork/${artwork._id}`}
+                  to={`/artwork/details/${artwork.artworkId}`}
                   className="block w-full text-center bg-linear-to-r from-purple-600 to-indigo-600 text-white py-2.5 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105"
                 >
                   View Details
                 </Link>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </MyContainer>

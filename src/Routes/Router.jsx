@@ -6,6 +6,10 @@ import NotFoundPage from "../pages/NotFoundPage";
 import ArtWorks from "../pages/ArtWorks";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import Profile from "../pages/Profile";
+import PrivateRoute from "./PrivateRoute";
+import ArtWorkDetails from "../pages/ArtWorkDetails";
+import ForgetPass from "../pages/ForgetPass";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +32,26 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Register />,
+      },
+      {
+        path: "/myProfile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/artwork/details/:id",
+        element: (
+          <PrivateRoute>
+            <ArtWorkDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/forgot-password/:email",
+        element: <ForgetPass />,
       },
     ],
   },

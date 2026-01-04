@@ -4,7 +4,7 @@
   themes: light --default;
 }
 
-h1 {
+body {
   font-family: "Playfair Display", serif; /* Or similar high-end serif */
 }
 
@@ -409,3 +409,4 @@ h1 {
 .type-badge {
   animation: badge-bounce 2s infinite ease-in-out;
 }
+

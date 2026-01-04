@@ -1,15 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import MyContainer from "../components/MyContainer";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 
 const Login = () => {
   const { user, setUser, signIn, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+  // console.log(location);
 
-  const from = location.state?.from.pathname || "/";
+  const [show, setShow] = useState(false);
+  const [email, setEmail] = useState("");
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -24,7 +27,7 @@ const Login = () => {
         setUser(user);
         toast.success("Login successful! Welcome back!");
         event.target.reset();
-        navigate(from, { replace: true });
+        navigate(location.state || "/");
       })
       .catch((err) => {
         console.error("Login error:", err);
@@ -51,13 +54,18 @@ const Login = () => {
   const handleGoogleSignIn = () => {
     signInWithGoogle()
       .then((result) => {
+        setUser(result.user);
         toast.success("Successfully signed in with Google!");
-        navigate(from, { replace: true });
+        navigate(location.state || "/");
       })
       .catch((error) => {
         console.error("Google sign-in error:", error);
         toast.error("Google sign-in failed. Please try again");
       });
+  };
+
+  const handleForget = () => {
+    navigate(`/forgot-password/${email}`);
   };
 
   return (
@@ -71,17 +79,17 @@ const Login = () => {
             </h1>
 
             <form onSubmit={handleLogin} className="space-y-6">
-              {/* Username/Email Field */}
+              {/* Email Field */}
               <div className="form-control w-full">
                 <label className="label mb-2">
                   <span className="text-sm font-bold text-gray-800">
-                    Username or email address{" "}
-                    <span className="text-red-500">*</span>
+                    Email address <span className="text-red-500">*</span>
                   </span>
                 </label>
                 <input
                   type="email"
                   name="email"
+                  onChange={(event) => setEmail(event.target.value)}
                   placeholder="Enter your username or email address..."
                   className="w-full px-6 py-4 bg-[#F7F7F7] rounded-full border-none focus:ring-2 focus:ring-gray-200 outline-none placeholder:text-gray-400 text-gray-700 transition-all"
                   required
@@ -95,13 +103,22 @@ const Login = () => {
                     Password <span className="text-red-500">*</span>
                   </span>
                 </label>
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Enter your password..."
-                  className="w-full px-6 py-4 bg-[#F7F7F7] rounded-full border-none focus:ring-2 focus:ring-gray-200 outline-none placeholder:text-gray-400 text-gray-700 transition-all"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    type={show ? "text" : "password"}
+                    name="password"
+                    placeholder="Enter your password..."
+                    className="w-full px-6 py-4 bg-[#F7F7F7] rounded-full border-none focus:ring-2 focus:ring-gray-200 outline-none placeholder:text-gray-400 text-gray-700 transition-all"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShow(!show)}
+                    className="absolute right-4 top-1/3"
+                  >
+                    {show ? <IoEye /> : <IoEyeOff />}{" "}
+                  </button>
+                </div>
               </div>
 
               {/* Remember Me & Forgot Password */}
@@ -115,12 +132,13 @@ const Login = () => {
                     Remember me
                   </span>
                 </label>
-                <Link
-                  to="/forgot-password"
-                  className="text-sm text-gray-500 hover:text-gray-900 underline underline-offset-4 decoration-dotted transition-colors"
+                <button
+                  onClick={handleForget}
+                  type="button"
+                  className="btn btn-ghost text-sm text-gray-500 hover:text-gray-900 underline underline-offset-4 decoration-dotted transition-colors"
                 >
                   Lost your password?
-                </Link>
+                </button>
               </div>
 
               <div className="w-full flex items-center gap-2">
@@ -142,7 +160,7 @@ const Login = () => {
               >
                 Log In
               </button>
-              
+
               {/* Divider */}
               <div className="divider my-8 w-full">OR</div>
 
