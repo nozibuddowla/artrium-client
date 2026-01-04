@@ -1,16 +1,39 @@
-# React + Vite
+# Artrium – A CREATIVE ARTWORK SHOWCASE PLATFORM
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Create an online art-sharing platform where artists can upload and display their creative works, explore other artists’ galleries, curate favorites, and connect through appreciation and interaction. The website emphasizes creativity, modern UI, and clean navigation for art lovers.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌐 Live Demo  
+🔗 **[https://artrium-tourmaline.netlify.app/](https://artrium-tourmaline.netlify.app/)**
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 How to Run Locally
 
-## Expanding the ESLint configuration
+### 1. Clone the repository:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+git clone https://github.com/nozibuddowla/artrium-client.git
+cd artrium-client
+````
+
+### 2. Install dependencies:
+
+```bash
+npm install
+```
+
+### 3. Start development server:
+
+```bash
+npm run dev
+```
+
+### 4. Build for production:
+
+```bash
+npm run build
+```
+
+---
