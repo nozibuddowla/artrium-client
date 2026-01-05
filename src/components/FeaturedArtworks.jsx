@@ -2,22 +2,31 @@ import React, { useEffect, useState } from "react";
 import MyContainer from "./MyContainer";
 import { Link } from "react-router";
 import { motion } from "motion/react";
+import axios from "axios";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 const FeaturedArtworks = () => {
   const [artworks, setArtworks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("./artworks.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setArtworks(data);
-        setLoading(false);
-      })
-      .catch((err) => {
+    const fetchFeatured = async () => {
+      try {
+        setLoading(true);
+
+        const response = await axios.get(
+          "http://localhost:3000/artworks/featured"
+        );
+
+        setArtworks(response.data);
+      } catch (error) {
         console.error("Error fetching artworks:", err);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchFeatured();
   }, []);
 
   //   console.log(artworks);
@@ -55,7 +64,7 @@ const FeaturedArtworks = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {artworks.slice(0, 6).map((artwork) => (
             <motion.div
-              key={artwork.artworkId}
+              key={artwork._id}
               initial={{ scale: 0.5 }}
               animate={{ scale: 1, transition: { duration: 0.5 } }}
               className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
@@ -91,12 +100,12 @@ const FeaturedArtworks = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  {artwork.artistName}
+                  {artwork.userName}
                 </p>
 
                 {/* View Details Button */}
                 <Link
-                  to={`/artwork/details/${artwork.artworkId}`}
+                  to={`/artwork/details/${artwork._id}`}
                   className="block w-full text-center bg-linear-to-r from-purple-600 to-indigo-600 text-white py-2.5 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105"
                 >
                   View Details
@@ -108,12 +117,12 @@ const FeaturedArtworks = () => {
 
         {/* View All Button */}
         {artworks.length > 0 && (
-          <div className="text-center mt-12">
+          <div className="flex items-center justify-center mt-12">
             <Link
               to="/exploreArtworks"
-              className="inline-block px-8 py-3 bg-white text-purple-600 font-semibold rounded-full border-2 border-purple-600 hover:bg-purple-100 transition-all duration-300"
+              className="inline-block px-8 py-3 bg-white text-purple-600 font-semibold rounded-full border-2 border-purple-600 hover:bg-purple-100 transition-all duration-300 w-full sm:w-1/2 md:w-1/4 text-center"
             >
-              Explore More Artworks →
+              <span>Explore More Artworks</span>
             </Link>
           </div>
         )}

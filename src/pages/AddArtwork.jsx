@@ -9,6 +9,7 @@ import { MdOutlineDescription, MdOutlineZoomOutMap } from "react-icons/md";
 import { AuthContext } from "../Provider/AuthProvider";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const AddArtwork = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +30,7 @@ const AddArtwork = () => {
     "Collage",
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -61,12 +62,25 @@ const AddArtwork = () => {
       createdAt,
     };
 
-      console.log(artworkData);
-      
-      axios.post("http://localhost:3000/artworks", artworkData)
-          .then(res => {
-          console.log(res);
-      })
+    //   console.log(artworkData);
+
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/artworks",
+        artworkData
+      );
+
+      if (res.data.insertedId) {
+        toast.success("Artwork added successfully!");
+        form.reset();
+        navigate("/exploreArtworks");
+      }
+    } catch (err) {
+      console.error("Error adding artwork:", err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

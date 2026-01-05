@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import MyContainer from "../components/MyContainer";
 import Loader from "../components/Loader";
+import { FaHeart, FaStar } from "react-icons/fa6";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const ArtWorkDetails = () => {
-  const [artworks, setArtworks] = useState([]);
-  const [artWorksDetails, setArtWorksDetails] = useState(null);
+  const [artwork, setArtwork] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch("/artworks.json")
+    fetch(`http://localhost:3000/artworks/${id}`)
       .then((res) => res.json())
       .then((data) => {
         //   console.log(data);
-        setArtworks(data);
+        setArtwork(data);
         setLoading(false);
       })
       .catch((err) => {
@@ -23,17 +25,16 @@ const ArtWorkDetails = () => {
       });
   }, []);
 
-  //   console.log(artworks);
+  // console.log(artworks);
 
-  useEffect(() => {
-    if (artworks.length > 0) {
-      const findResult = artworks.find((artWork) => artWork.artworkId === id);
-      //   console.log("Found artwork:", findResult);
-      setArtWorksDetails(findResult);
-    }
-  }, [id, artworks]);
-
-  //   console.log("Artwork Details:", artWorksDetails);
+  const handleLike = () => {
+    fetch(`http://localhost:3000/artworks/${id}/like`, { method: "PATCH" })
+      .then((res) => res.json())
+      .then(() => {
+        // Update local state to show the new like count immediately
+        setArtwork({ ...artwork, likes: (artwork.likes || 0) + 1 });
+      });
+  };
 
   if (loading) {
     return (
@@ -47,7 +48,7 @@ const ArtWorkDetails = () => {
     );
   }
 
-  if (!artWorksDetails) {
+  if (!artwork) {
     return (
       <div>
         <MyContainer>
@@ -63,15 +64,12 @@ const ArtWorkDetails = () => {
     <div className="min-h-screen py-20">
       <MyContainer>
         <div className="max-w-6xl mx-auto px-4">
-          <h1 className="text-4xl font-bold">{artworks?.title}</h1>
-          <h1 className="text-4xl font-bold">{artWorksDetails?.title}</h1>
-          <p className="text-xl text-gray-600 mt-2">
-            By {artWorksDetails?.artistName}
-          </p>
+          <h1 className="text-4xl font-bold">{artwork?.title}</h1>
+          <p className="text-xl text-gray-600 mt-2">By {artwork?.userName}</p>
           <div className="mt-8">
             <img
-              src={artWorksDetails.imageUrl}
-              alt={artWorksDetails.title}
+              src={artwork.imageUrl}
+              alt={artwork.title}
               className="w-full max-h-150 object-contain rounded-lg shadow-xl"
             />
           </div>
@@ -81,19 +79,18 @@ const ArtWorkDetails = () => {
               <div className="space-y-3">
                 <p>
                   <span className="font-semibold">Category:</span>{" "}
-                  {artWorksDetails.category}
+                  {artwork.category}
                 </p>
                 <p>
                   <span className="font-semibold">Medium:</span>{" "}
-                  {artWorksDetails.medium}
+                  {artwork.medium}
                 </p>
                 <p>
                   <span className="font-semibold">Dimensions:</span>{" "}
-                  {artWorksDetails.dimensions}
+                  {artwork.dimensions}
                 </p>
                 <p>
-                  <span className="font-semibold">Price:</span> $
-                  {artWorksDetails.price}
+                  <span className="font-semibold">Price:</span> ${artwork.price}
                 </p>
               </div>
             </div>
@@ -101,8 +98,40 @@ const ArtWorkDetails = () => {
             <div>
               <h3 className="text-2xl font-bold mb-4">Description</h3>
               <p className="text-gray-700 leading-relaxed">
-                {artWorksDetails.description}
+                {artwork.description}
               </p>
+            </div>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="flex gap-4 mt-10">
+              <button
+                onClick={handleLike}
+                className="btn bg-red-50 text-red-600 border-red-200 hover:bg-red-600 hover:text-white rounded-full px-8"
+              >
+                <FaHeart /> Like ({artwork.likes || 0})
+              </button>
+
+              <button className="btn bg-[#C89446] text-white hover:bg-[#b0823b] border-none rounded-full px-8">
+                <FaStar /> Add to Favorites
+              </button>
+            </div>
+
+            <div className="mt-12 p-8 bg-gray-50 rounded-2xl flex items-center gap-6">
+              <div className="avatar">
+                <div className="w-24 rounded-full ring ring-[#C89446] ring-offset-base-100 ring-offset-2">
+                  {/* Placeholder or artist photo if available */}
+                  <img src={user.photoURL} />
+                </div>
+              </div>
+              <div>
+                <h3 className="text-2xl font-serif font-bold">
+                  {artwork.userName}
+                </h3>
+                <p className="text-gray-500">
+                  Professional Artist • {artwork.userEmail}
+                </p>
+              </div>
             </div>
           </div>
         </div>

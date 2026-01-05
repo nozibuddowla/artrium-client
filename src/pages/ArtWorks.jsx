@@ -2,22 +2,31 @@ import React, { useEffect, useState } from "react";
 import MyContainer from "../components/MyContainer";
 import { Link } from "react-router";
 import { motion } from "motion/react";
+import axios from "axios";
+import { CiUser } from "react-icons/ci";
+import { FaUser } from "react-icons/fa6";
 
 const ArtWorks = () => {
   const [artworks, setArtworks] = useState([]);
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
 
+  const loadArtworks = async (searchQuery = "") => {
+    try {
+      setLoading(true);
+      const res = await axios.get(
+        `http://localhost:3000/artworks?search=${searchQuery}`
+      );
+      setArtworks(res.data);
+    } catch (err) {
+      console.error("Failed to load artworks", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetch("./artworks.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setArtworks(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching artworks:", err);
-        setLoading(false);
-      });
+    loadArtworks();
   }, []);
 
   if (loading) {
@@ -50,10 +59,25 @@ const ArtWorks = () => {
           Explore Artworks
         </h1>
 
+        <div className="flex items-center justify-between gap-4 max-w-2xl mx-auto mb-12">
+          <input
+            type="text"
+            placeholder="Search by title or artist..."
+            className="input w-full rounded-full px-6 border-gray-300 focus:border-purple-500 outline-none h-12"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button
+            onClick={() => loadArtworks(search)}
+            className="btn bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full transition-colors"
+          >
+            Search
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {artworks.map((artwork) => (
             <motion.div
-              key={artwork.artworkId}
+              key={artwork._id}
               initial={{ scale: 0.5 }}
               animate={{ scale: 1, transition: { duration: 0.5 } }}
               className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
@@ -77,24 +101,23 @@ const ArtWorks = () => {
                   {artwork.title}
                 </h4>
 
-                <p className="text-gray-600 text-sm mb-4 flex items-center gap-2">
-                  <svg
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  {artwork.artistName}
-                </p>
+                <div className="flex justify-between items-center mb-4">
+                  <div className=" flex items-center gap-2">
+                    <FaUser size={16} color="#4a5565" />
+                    <span className="text-gray-600">
+                      {" "}
+                      {artwork.userName}{" "}
+                    </span>
+                  </div>
+                  {/* Added Likes Count per instructions */}
+                  <span className="flex items-center gap-1 text-sm font-medium text-pink-600">
+                    ❤️ {artwork.likes || 0}
+                  </span>
+                </div>
 
                 {/* View Details Button */}
                 <Link
-                  to={`/artwork/details/${artwork.artworkId}`}
+                  to={`/artwork/details/${artwork._id}`}
                   className="block w-full text-center bg-linear-to-r from-purple-600 to-indigo-600 text-white py-2.5 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105"
                 >
                   View Details
