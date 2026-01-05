@@ -10,6 +10,7 @@ import Profile from "../pages/Profile";
 import PrivateRoute from "./PrivateRoute";
 import ArtWorkDetails from "../pages/ArtWorkDetails";
 import ForgetPass from "../pages/ForgetPass";
+import AddArtwork from "../pages/AddArtwork";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,14 @@ const router = createBrowserRouter([
       {
         path: "/forgot-password/:email",
         element: <ForgetPass />,
+      },
+      {
+        path: "/add-artwork",
+        element: (
+          <PrivateRoute>
+            <AddArtwork />
+          </PrivateRoute>
+        ),
       },
     ],
   },
