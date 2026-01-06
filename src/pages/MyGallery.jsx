@@ -75,7 +75,7 @@ const MyGallery = () => {
         `http://localhost:3000/artworks/${id}`,
         updatedData
       );
-      
+
       if (res.data.modifiedCount > 0) {
         Swal.fire("Success!", "Artwork updated successfully", "success");
         document.getElementById("update-modal").checked = false; // Close DaisyUI modal
@@ -84,6 +84,26 @@ const MyGallery = () => {
     } catch (err) {
       Swal.fire("Error", "Update failed", "error");
     }
+  };
+
+  // --- DELETE HANDLER ---
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await axios.delete(`http://localhost:3000/artworks/${id}`);
+
+        Swal.fire("Deleted!", "Your artwork has been removed.", "success");
+        setMyArtworks(myArtworks.filter((art) => art._id !== id));
+      }
+    });
   };
 
   return (
@@ -135,7 +155,10 @@ const MyGallery = () => {
                   <td> {artWork?.dimensions} </td>
                   <td> {artWork?.price} </td>
                   <td className="flex items-center gap-2">
-                    <button className="btn btn-error">
+                    <button
+                      onClick={() => handleDelete(artWork?._id)}
+                      className="btn btn-error"
+                    >
                       <MdDelete size={18} color="white" />
                     </button>
                     <label
