@@ -104,7 +104,7 @@ const ArtWorkDetails = () => {
           </div>
 
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="flex gap-4 mt-10">
+            <div className="flex gap-4">
               <button
                 onClick={handleLike}
                 className="btn bg-red-50 text-red-600 border-red-200 hover:bg-red-600 hover:text-white rounded-full px-8"
@@ -117,11 +117,11 @@ const ArtWorkDetails = () => {
               </button>
             </div>
 
-            <div className="mt-12 p-8 bg-gray-50 rounded-2xl flex items-center gap-6">
+            <div className="p-8 bg-gray-50 rounded-2xl flex items-center gap-6">
               <div className="avatar">
                 <div className="w-24 rounded-full ring ring-[#C89446] ring-offset-base-100 ring-offset-2">
                   {/* Placeholder or artist photo if available */}
-                  <img src={user.photoURL} />
+                  <img src={artwork.userPhoto} alt={artwork.userName} />
                 </div>
               </div>
               <div>
@@ -129,8 +129,11 @@ const ArtWorkDetails = () => {
                   {artwork.userName}
                 </h3>
                 <p className="text-gray-500">
-                  Professional Artist • {artwork.userEmail}
+                  {artwork.userEmail}
                 </p>
+                <div className="mt-2 inline-block bg-purple-100 text-purple-700 font-bold px-3 py-1 rounded-full text-lg">
+                  {artwork.artistTotalCount} Artworks
+                </div>
               </div>
             </div>
           </div>

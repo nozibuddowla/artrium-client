@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import { motion } from "motion/react";
 import axios from "axios";
 import { CiUser } from "react-icons/ci";
-import { FaUser } from "react-icons/fa6";
+import { FaHeart, FaUser } from "react-icons/fa6";
 
 const ArtWorks = () => {
   const [artworks, setArtworks] = useState([]);
@@ -33,9 +33,9 @@ const ArtWorks = () => {
     return (
       <div className="my-16">
         <MyContainer>
-          <h3 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            Featured Artworks
-          </h3>
+          <h1 className="text-3xl font-bold text-center mb-12 text-gray-800">
+            Explore Artworks
+          </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="animate-pulse">
@@ -110,8 +110,8 @@ const ArtWorks = () => {
                     </span>
                   </div>
                   {/* Added Likes Count per instructions */}
-                  <span className="flex items-center gap-1 text-sm font-medium text-pink-600">
-                    ❤️ {artwork.likes || 0}
+                  <span className="flex items-center gap-1 font-medium text-pink-600">
+                    <FaHeart />  {artwork.likes || 0}
                   </span>
                 </div>
 

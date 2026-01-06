@@ -11,6 +11,7 @@ import PrivateRoute from "./PrivateRoute";
 import ArtWorkDetails from "../pages/ArtWorkDetails";
 import ForgetPass from "../pages/ForgetPass";
 import AddArtwork from "../pages/AddArtwork";
+import MyGallery from "../pages/MyGallery";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AddArtwork />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/myGallery",
+        element: (
+          <PrivateRoute>
+            <MyGallery />
           </PrivateRoute>
         ),
       },

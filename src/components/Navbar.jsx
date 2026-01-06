@@ -45,7 +45,7 @@ const Navbar = () => {
           Explore Artworks
         </NavLink>
       </li>
-      <li>
+      {/* <li>
         {" "}
         <NavLink
           to="/add-artwork"
@@ -57,8 +57,8 @@ const Navbar = () => {
         >
           Add Artwork
         </NavLink>{" "}
-      </li>
-      <li>
+      </li> */}
+      {/* <li>
         {" "}
         <NavLink
           to="/myGallery"
@@ -70,8 +70,8 @@ const Navbar = () => {
         >
           My Gallery
         </NavLink>{" "}
-      </li>
-      <li>
+      </li> */}
+      {/* <li>
         {" "}
         <NavLink
           to="/myFavorites"
@@ -83,7 +83,52 @@ const Navbar = () => {
         >
           My Favorites
         </NavLink>{" "}
-      </li>
+      </li> */}
+      {user ? (
+        <>
+          <li>
+            {" "}
+            <NavLink
+              to="/add-artwork"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-purple-600 font-bold"
+                  : "font-medium hover:text-purple-600"
+              }
+            >
+              Add Artwork
+            </NavLink>{" "}
+          </li>
+          <li>
+            {" "}
+            <NavLink
+              to="/myGallery"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-purple-600 font-bold"
+                  : "font-medium hover:text-purple-600"
+              }
+            >
+              My Gallery
+            </NavLink>{" "}
+          </li>
+          <li>
+            {" "}
+            <NavLink
+              to="/myFavorites"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-purple-600 font-bold"
+                  : "font-medium hover:text-purple-600"
+              }
+            >
+              My Favorites
+            </NavLink>{" "}
+          </li>
+        </>
+      ) : (
+        ""
+      )}
     </>
   );
   return (

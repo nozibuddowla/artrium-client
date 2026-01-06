@@ -1,20 +1,40 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MyContainer from "../components/MyContainer";
-import { FaEye, FaImage, FaPlus, FaUser } from "react-icons/fa6";
-import { CiImageOn } from "react-icons/ci";
-import { LiaComment } from "react-icons/lia";
+import { AuthContext } from "../Provider/AuthProvider";
+import axios from "axios";
+import { Link } from "react-router";
+import {
+  MdDelete,
+  MdOutlineDescription,
+  MdOutlineZoomOutMap,
+} from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
 import { LuBadgeDollarSign, LuTag } from "react-icons/lu";
 import { GoPencil } from "react-icons/go";
-import { MdOutlineDescription, MdOutlineZoomOutMap } from "react-icons/md";
-import { AuthContext } from "../Provider/AuthProvider";
-import { useNavigate } from "react-router";
-import axios from "axios";
-import { toast } from "react-toastify";
+import { CiImageOn } from "react-icons/ci";
+import { LiaComment } from "react-icons/lia";
+import { FaEye } from "react-icons/fa6";
+import Swal from "sweetalert2";
 
-const AddArtwork = () => {
-  const [isLoading, setIsLoading] = useState(false);
+const MyGallery = () => {
+  const [myArtworks, setMyArtworks] = useState([]);
+  const [selectedArtwork, setSelectedArtwork] = useState(null);
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
+
+  const loadArtworks = async () => {
+    const res = await axios.get(
+      `http://localhost:3000/my-gallery?email=${user?.email}`
+    );
+    setMyArtworks(res.data);
+  };
+
+  useEffect(() => {
+    if (user?.email) {
+      loadArtworks();
+    }
+  }, [user?.email]);
+
+  //   console.log(myArtworks);
 
   const categories = [
     "Abstract",
@@ -30,81 +50,123 @@ const AddArtwork = () => {
     "Collage",
   ];
 
-  const handleSubmit = async (e) => {
+  // --- UPDATE HNADLER ---
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-
     const form = e.target;
+    const id = form.id.value;
 
-    const imageUrl = form.imageUrl.value;
-    const title = form.title.value;
-    const category = form.category.value;
-    const medium = form.medium.value;
-    const description = form.description.value;
-    const dimensions = form.dimensions.value || "Not specified";
-    const price = parseFloat(form.price.value) || 0;
-    const visibility = form.visibility.value;
-    const userName = user?.displayName || "Anonymous";
-    const userEmail = user?.email;
-    const createdAt = new Date().toISOString();
+    const visibilityValue =
+      form.visibility.value || selectedArtwork?.visibility;
 
-    const artworkData = {
-      imageUrl,
-      title,
-      category,
-      medium,
-      description,
-      dimensions,
-      price,
-      visibility,
-      userName,
-      userPhoto: user?.photoURL,
-      userEmail,
-      createdAt,
-      likes: 0
+    const updatedData = {
+      title: form.title.value,
+      category: form.category.value,
+      medium: form.medium.value,
+      description: form.description.value,
+      price: form.price.value,
+      visibility: visibilityValue,
+      dimensions: form.dimensions.value,
+      imageUrl: form.imageUrl.value,
     };
 
-    //   console.log(artworkData);
-
     try {
-      const res = await axios.post(
-        "http://localhost:3000/artworks",
-        artworkData
+      const res = await axios.put(
+        `http://localhost:3000/artworks/${id}`,
+        updatedData
       );
-
-      if (res.data.insertedId) {
-        toast.success("Artwork added successfully!");
-        form.reset();
-        navigate("/exploreArtworks");
+      
+      if (res.data.modifiedCount > 0) {
+        Swal.fire("Success!", "Artwork updated successfully", "success");
+        document.getElementById("update-modal").checked = false; // Close DaisyUI modal
+        loadArtworks(); // Refresh list
       }
     } catch (err) {
-      console.error("Error adding artwork:", err);
-      alert("Something went wrong. Please try again.");
-    } finally {
-      setIsLoading(false);
+      Swal.fire("Error", "Update failed", "error");
     }
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-purple-50 via-white to-indigo-50 py-20">
+    <div className="py-6 md:py-12 px-3 md:px-6 2xl:px-12">
       <MyContainer>
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-linear-to-r from-purple-600 to-indigo-600 rounded-full mb-4">
-              <FaPlus size={32} color="#fff" />
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-3">
-              Add New Artwork
-            </h1>
-            <p className="text-gray-600 text-lg">
-              Share your creative masterpiece with the community
-            </p>
-          </div>
+        <h1 className="text-3xl font-bold text-center mb-12 text-gray-800">
+          My Artworks
+        </h1>
+        <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+          <table className="table table-pin-rows table-zebra">
+            {/* head */}
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Medium</th>
+                <th>Dimension</th>
+                <th>Price</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* row 1 */}
+              {myArtworks.map((artWork) => (
+                <tr key={artWork._id}>
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <Link
+                        to={`/artwork/details/${artWork?._id}`}
+                        className="avatar"
+                      >
+                        <div className="mask mask-squircle h-16 w-16">
+                          <img src={artWork?.imageUrl} alt={artWork?.title} />
+                        </div>
+                      </Link>
+                      <div>
+                        <Link
+                          to={`/artwork/details/${artWork?._id}`}
+                          className="font-bold"
+                        >
+                          {artWork?.title}
+                        </Link>
+                        <div className="text-sm opacity-50">
+                          {artWork.category}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td> {artWork?.medium} </td>
+                  <td> {artWork?.dimensions} </td>
+                  <td> {artWork?.price} </td>
+                  <td className="flex items-center gap-2">
+                    <button className="btn btn-error">
+                      <MdDelete size={18} color="white" />
+                    </button>
+                    <label
+                      htmlFor="update-modal"
+                      className="btn bg-linear-to-br from-[#632ee3] to-[#9f62f2]"
+                      onClick={() => setSelectedArtwork(artWork)}
+                    >
+                      <FaEdit size={18} color="white" />
+                    </label>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-          {/* Form Card */}
-          <div className="bg-white rounded-3xl shadow-xl p-8 md:p-10">
-            <form onSubmit={handleSubmit} className="space-y-6">
+        <input type="checkbox" id="update-modal" className="modal-toggle" />
+        <div className="modal">
+          <div className="modal-box max-w-2xl">
+            <h3 className="font-bold text-lg">Update Artwork</h3>
+            <form
+              onSubmit={handleUpdate}
+              key={selectedArtwork?._id}
+              className="space-y-4 mt-4"
+            >
+              <input
+                type="hidden"
+                name="id"
+                defaultValue={selectedArtwork?._id}
+              />
+
               {/* Image URL */}
               <div className="form-control">
                 <label className="label">
@@ -117,6 +179,7 @@ const AddArtwork = () => {
                 <input
                   type="url"
                   name="imageUrl"
+                  defaultValue={selectedArtwork?.imageUrl}
                   placeholder="https://example.com/image.jpg"
                   className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:ring-2 focus:ring-purple-200 focus:border-transparent outline-none transition-all"
                   required
@@ -138,6 +201,7 @@ const AddArtwork = () => {
                 <input
                   type="text"
                   name="title"
+                  defaultValue={selectedArtwork?.title}
                   placeholder="Enter artwork title"
                   className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:ring-2 focus:ring-purple-200 focus:border-transparent outline-none transition-all"
                   required
@@ -158,9 +222,12 @@ const AddArtwork = () => {
                   <select
                     name="category"
                     className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:ring-2 focus:ring-purple-200 focus:border-transparent outline-none transition-all"
+                    defaultValue={selectedArtwork?.category}
                     required
                   >
-                    <option value="">Select a category</option>
+                    <option value="" disabled>
+                      Select a category
+                    </option>
                     {categories.map((cat) => (
                       <option key={cat} value={cat}>
                         {cat}
@@ -181,6 +248,7 @@ const AddArtwork = () => {
                   <input
                     type="text"
                     name="medium"
+                    defaultValue={selectedArtwork?.medium}
                     placeholder="e.g., Oil on Canvas, Digital Art"
                     className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:ring-2 focus:ring-purple-200 focus:border-transparent outline-none transition-all"
                     required
@@ -199,6 +267,7 @@ const AddArtwork = () => {
                 </label>
                 <textarea
                   name="description"
+                  defaultValue={selectedArtwork?.description}
                   rows="4"
                   placeholder="Describe your artwork, inspiration, and techniques..."
                   className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:ring-2 focus:ring-purple-200 focus:border-transparent outline-none transition-all resize-none"
@@ -220,6 +289,7 @@ const AddArtwork = () => {
                   <input
                     type="text"
                     name="dimensions"
+                    defaultValue={selectedArtwork?.dimensions}
                     placeholder='e.g., 24" x 36"'
                     className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:ring-2 focus:ring-purple-200 focus:border-transparent outline-none transition-all"
                   />
@@ -237,6 +307,7 @@ const AddArtwork = () => {
                   <input
                     type="number"
                     name="price"
+                    defaultValue={selectedArtwork?.price}
                     placeholder="0.00"
                     min="0"
                     step="0.01"
@@ -261,7 +332,7 @@ const AddArtwork = () => {
                       name="visibility"
                       value="public"
                       className="w-4 h-4 accent-purple-600"
-                      defaultChecked
+                      defaultChecked={selectedArtwork?.visibility === "public"}
                     />
                     <span className="text-gray-700 font-medium">Public</span>
                   </label>
@@ -271,81 +342,20 @@ const AddArtwork = () => {
                       name="visibility"
                       value="private"
                       className="w-4 h-4 accent-purple-600"
+                      defaultChecked={selectedArtwork?.visibility === "private"}
                     />
                     <span className="text-gray-700 font-medium">Private</span>
                   </label>
                 </div>
               </div>
 
-              {/* Read-only User Info */}
-              <div className="bg-purple-50 rounded-2xl p-6 border-2 border-purple-100">
-                <h3 className="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2">
-                  <FaUser color="#8E24AA" size={20} />
-                  Artist Information
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-xs text-gray-600 mb-1 block">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      value={user?.displayName || "Anonymous"}
-                      className="w-full px-4 py-2 bg-white rounded-lg border border-purple-200 text-gray-700 cursor-not-allowed"
-                      readOnly
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs text-gray-600 mb-1 block">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      value={user?.email || ""}
-                      className="w-full px-4 py-2 bg-white rounded-lg border border-purple-200 text-gray-700 cursor-not-allowed"
-                      readOnly
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Submit Button */}
-              <div className="pt-6">
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full py-4 bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-lg rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-3"
-                >
-                  {isLoading ? (
-                    <>
-                      <svg
-                        className="animate-spin h-6 w-6"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      Adding Artwork...
-                    </>
-                  ) : (
-                    <>
-                      <FaPlus size={24} color="#fff" />
-                      Add Artwork
-                    </>
-                  )}
+              <div className="modal-action">
+                <button type="submit" className="btn btn-primary">
+                  Save Changes
                 </button>
+                <label htmlFor="update-modal" className="btn">
+                  Close
+                </label>
               </div>
             </form>
           </div>
@@ -355,4 +365,4 @@ const AddArtwork = () => {
   );
 };
 
-export default AddArtwork;
+export default MyGallery;
