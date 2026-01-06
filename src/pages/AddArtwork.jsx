@@ -87,6 +87,7 @@ const AddArtwork = () => {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-purple-50 via-white to-indigo-50 py-20">
+      <title>Add New Artwork</title>
       <MyContainer>
         <div className="max-w-4xl mx-auto">
           {/* Header */}

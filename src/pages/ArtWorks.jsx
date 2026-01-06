@@ -26,8 +26,12 @@ const ArtWorks = () => {
   };
 
   useEffect(() => {
-    loadArtworks();
-  }, []);
+    const delayDebounceFn = setTimeout(() => {
+      loadArtworks(search);
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [search]);
 
   if (loading) {
     return (
@@ -36,6 +40,7 @@ const ArtWorks = () => {
           <h1 className="text-3xl font-bold text-center mb-12 text-gray-800">
             Explore Artworks
           </h1>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="animate-pulse">
@@ -53,79 +58,122 @@ const ArtWorks = () => {
   }
 
   return (
-    <div className="my-16">
+    <div
+      className="py-16 px-5 bg-fixed min-h-screen w-full bg-center bg-no-repeat"
+      style={{
+        backgroundImage: "url('/newsletter-bg.png')",
+        backgroundSize: "cover",
+      }}
+    >
+      <title>Explore Artworks</title>
       <MyContainer>
         <h1 className="text-3xl font-bold text-center mb-12 text-gray-800">
           Explore Artworks
         </h1>
 
-        <div className="flex items-center justify-between gap-4 max-w-2xl mx-auto mb-12">
-          <input
-            type="text"
-            placeholder="Search by title or artist..."
-            className="input w-full rounded-full px-6 border-gray-300 focus:border-purple-500 outline-none h-12"
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <button
-            onClick={() => loadArtworks(search)}
-            className="btn bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full transition-colors"
-          >
-            Search
-          </button>
+        <div className="relative max-w-2xl mx-auto mb-12">
+          <div className="relative flex items-center">
+            <input
+              type="text"
+              value={search}
+              placeholder="Search by title, artist, or category..."
+              className="input w-full rounded-full pl-6 pr-32 border-gray-300 focus:border-purple-500 outline-none h-14 shadow-lg"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <div className="absolute right-2 flex gap-2">
+              {search && (
+                <button
+                  onClick={() => setSearch("")}
+                  className="btn btn-ghost btn-sm rounded-full"
+                >
+                  ✕
+                </button>
+              )}
+              <button
+                onClick={() => loadArtworks(search)}
+                className="btn bg-purple-600 hover:bg-purple-700 text-white rounded-full px-6"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+          {search && (
+            <p className=" text-gray-800 mt-2 ml-6">
+              Showing results for:{" "}
+              <span className="font-semibold">"{search}"</span>
+            </p>
+          )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {artworks.map((artwork) => (
-            <motion.div
-              key={artwork._id}
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1, transition: { duration: 0.5 } }}
-              className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
-            >
-              {/* Image */}
-              <div className="relative h-64 overflow-hidden bg-gray-200">
-                <img
-                  src={artwork?.imageUrl}
-                  alt={artwork.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                {/* Category Badge */}
-                <div className="absolute top-4 right-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                  {artwork.category}
+        {artworks.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {artworks.map((artwork) => (
+              <motion.div
+                key={artwork._id}
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1, transition: { duration: 0.5 } }}
+                className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
+              >
+                {/* Image */}
+                <div className="relative h-64 overflow-hidden bg-gray-200">
+                  <img
+                    src={artwork?.imageUrl}
+                    alt={artwork.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  {/* Category Badge */}
+                  <div className="absolute top-4 right-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    {artwork.category}
+                  </div>
                 </div>
-              </div>
 
-              {/* Card Content */}
-              <div className="p-5">
-                <h4 className="text-xl font-bold text-gray-800 mb-2 line-clamp-1">
-                  {artwork.title}
-                </h4>
+                {/* Card Content */}
+                <div className="p-5">
+                  <h4 className="text-xl font-bold text-gray-800 mb-2 line-clamp-1">
+                    {artwork.title}
+                  </h4>
 
-                <div className="flex justify-between items-center mb-4">
-                  <div className=" flex items-center gap-2">
-                    <FaUser size={16} color="#4a5565" />
-                    <span className="text-gray-600">
-                      {" "}
-                      {artwork.userName}{" "}
+                  <div className="flex justify-between items-center mb-4">
+                    <div className=" flex items-center gap-2">
+                      <FaUser size={16} color="#4a5565" />
+                      <span className="text-gray-600">
+                        {" "}
+                        {artwork.userName}{" "}
+                      </span>
+                    </div>
+                    {/* Added Likes Count per instructions */}
+                    <span className="flex items-center gap-1 font-medium text-pink-600">
+                      <FaHeart /> {artwork.likes || 0}
                     </span>
                   </div>
-                  {/* Added Likes Count per instructions */}
-                  <span className="flex items-center gap-1 font-medium text-pink-600">
-                    <FaHeart />  {artwork.likes || 0}
-                  </span>
-                </div>
 
-                {/* View Details Button */}
-                <Link
-                  to={`/artwork/details/${artwork._id}`}
-                  className="block w-full text-center bg-linear-to-r from-purple-600 to-indigo-600 text-white py-2.5 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105"
-                >
-                  View Details
-                </Link>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                  {/* View Details Button */}
+                  <Link
+                    to={`/artwork/details/${artwork._id}`}
+                    className="block w-full text-center bg-linear-to-r from-purple-600 to-indigo-600 text-white py-2.5 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105"
+                  >
+                    View Details
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-20 bg-white/30 backdrop-blur-md rounded-3xl border border-dashed border-gray-400">
+            <h3 className="text-xl font-medium text-gray-600">
+              No artworks found.
+            </h3>
+            <p className="text-gray-500">
+              Try adjusting your search terms or keywords.
+            </p>
+            <button
+              onClick={() => setSearch("")}
+              className="btn btn-link text-purple-600"
+            >
+              Clear all filters
+            </button>
+          </div>
+        )}
       </MyContainer>
     </div>
   );

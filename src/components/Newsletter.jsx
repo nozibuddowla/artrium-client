@@ -5,6 +5,8 @@ import { CiAt } from "react-icons/ci";
 import { FcLock } from "react-icons/fc";
 import { FaCalendar, FaHeart, FaStar } from "react-icons/fa6";
 
+
+
 const Newsletter = () => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -35,9 +37,10 @@ const Newsletter = () => {
 
   return (
     <div
-      className="py-20 bg-cover bg-center bg-no-repeat"
+      className="py-16 px-5 bg-cover bg-center bg-no-repeat bg-fixed w-full"
       style={{
         backgroundImage: "url('/newsletter-bg.png')",
+        backgroundSize: "cover",
       }}
     >
       <MyContainer>
@@ -122,7 +125,7 @@ const Newsletter = () => {
 
           {/* Features */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-3xl mx-auto">
-            <div className="flex items-center gap-3 text-gray-700 bg-white/90 backdrop-blur-xs rounded-2xl p-4">
+            <div className="flex items-center gap-3 text-gray-700 bg-white/40 backdrop-blur-xs rounded-2xl p-4">
               <div className="shrink-0">
                 <FaStar size={32} color="#FFF176" />
               </div>
@@ -134,7 +137,7 @@ const Newsletter = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 text-gray-700 bg-white/90 backdrop-blur-xs rounded-2xl p-4">
+            <div className="flex items-center gap-3 text-gray-700 bg-white/40 backdrop-blur-xs rounded-2xl p-4">
               <div className="shrink-0">
                 <FaCalendar size={32} color="#7bf1a8" />
               </div>
@@ -146,7 +149,7 @@ const Newsletter = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 text-gray-700 bg-white/90 backdrop-blur-xs rounded-2xl p-4">
+            <div className="flex items-center gap-3 text-gray-700 bg-white/40 backdrop-blur-xs rounded-2xl p-4">
               <div className="shrink-0">
                 <FaHeart size={32} color="#E57373" />
               </div>

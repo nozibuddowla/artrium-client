@@ -120,7 +120,7 @@ const FeaturedArtworks = () => {
           <div className="flex items-center justify-center mt-12">
             <Link
               to="/exploreArtworks"
-              className="inline-block px-8 py-3 bg-white text-purple-600 font-semibold rounded-full border-2 border-purple-600 hover:bg-purple-100 transition-all duration-300 w-full sm:w-1/2 md:w-1/4 text-center"
+              className="inline-block px-8 py-3 bg-white text-purple-600 font-semibold rounded-full border-2 border-purple-600 hover:bg-purple-100 transition-all duration-300 w-full md:w-1/3 text-center"
             >
               <span>Explore More Artworks</span>
             </Link>

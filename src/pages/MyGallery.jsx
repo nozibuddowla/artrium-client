@@ -107,12 +107,19 @@ const MyGallery = () => {
   };
 
   return (
-    <div className="py-6 md:py-12 px-3 md:px-6 2xl:px-12">
+    <div
+      className="py-16 px-5 bg-cover bg-center bg-no-repeat bg-fixed min-h-screen w-full"
+      style={{
+        backgroundImage: "url('/newsletter-bg.png')",
+        backgroundSize: "cover",
+      }}
+    >
+      <title>My Artworks</title>
       <MyContainer>
         <h1 className="text-3xl font-bold text-center mb-12 text-gray-800">
           My Artworks
         </h1>
-        <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+        <div className="overflow-x-auto rounded-box border border-white/20 bg-white/40 backdrop-blur-md shadow-xl">
           <table className="table table-pin-rows table-zebra">
             {/* head */}
             <thead>
@@ -175,8 +182,12 @@ const MyGallery = () => {
           </table>
         </div>
 
-        <input type="checkbox" id="update-modal" className="modal-toggle" />
-        <div className="modal">
+        <input
+          type="checkbox"
+          id="update-modal"
+          className="modal-toggle"
+        />
+        <div className="modal bg-black/50 backdrop-blur-sm">
           <div className="modal-box max-w-2xl">
             <h3 className="font-bold text-lg">Update Artwork</h3>
             <form
