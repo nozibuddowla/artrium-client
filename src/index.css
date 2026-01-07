@@ -1,11 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 @import "tailwindcss";
-@plugin "daisyui" {
-  themes: light --default;
+@plugin "daisyui";
+
+:root, html {
+  background-color: var(--fallback-b1,oklch(var(--b1)));
+  color: var(--fallback-bc,oklch(var(--bc)));
 }
 
 body {
-  font-family: "Playfair Display", serif; /* Or similar high-end serif */
+  font-family: "Playfair Display", serif;
+  @apply bg-base-100 text-base-content min-h-screen; /* This forces the background to update */
 }
 
 /* slider */
@@ -409,4 +413,3 @@ body {
 .type-badge {
   animation: badge-bounce 2s infinite ease-in-out;
 }
-

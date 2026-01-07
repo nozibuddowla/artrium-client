@@ -38,12 +38,12 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-purple-100 via-white to-indigo-100 py-20">
+    <div className="py-20">
       <title>My Profile</title>
       <MyContainer>
         <div className="max-w-4xl mx-auto">
           {/* Profile Card */}
-          <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
+          <div className="rounded-3xl shadow-2xl overflow-hidden">
             {/* Header Background */}
             <div className="h-32 bg-linear-to-r from-purple-600 to-indigo-600 relative">
               <div className="absolute inset-0 bg-black/10"></div>
@@ -70,10 +70,10 @@ const Profile = () => {
 
                 {/* User Info */}
                 <div className="text-center mt-4">
-                  <h1 className="text-3xl font-bold text-gray-800">
+                  <h1 className="text-3xl font-bold">
                     {user?.displayName || "Anonymous User"}
                   </h1>
-                  <p className="text-gray-600 mt-1 flex items-center justify-center gap-2">
+                  <p className="mt-1 flex items-center justify-center gap-2">
                     <MdEmail size={20} />
                     {user?.email}
                   </p>
@@ -99,7 +99,7 @@ const Profile = () => {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto animate-scale-in">
+          <div className="bg-black dark:bg-white rounded-3xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto animate-scale-in">
             {/* Modal Header */}
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">

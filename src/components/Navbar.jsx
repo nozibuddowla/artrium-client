@@ -1,14 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MyContainer from "./MyContainer";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
-import { signOut } from "firebase/auth";
-import auth from "../firebase/firebase.config";
 import { toast } from "react-toastify";
+import { FaMoon, FaSun } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const handleSignOut = () => {
     logOut()
       .then(() => {
@@ -19,6 +18,26 @@ const Navbar = () => {
         toast.error("Logout failed. Please try again");
       });
   };
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+
+    if (theme === "dark") {
+      root.classList.add("dark");
+      root.setAttribute("data-theme", "dark");
+    } else {
+      root.classList.remove("dark");
+      root.setAttribute("data-theme", "light");
+    }
+
+    // 2. Save the choice to localStorage
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
   const links = (
     <>
       <li>
@@ -116,7 +135,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-10 mt-3 w-56 p-3 shadow-lg border-base-300"
             >
               {links}
             </ul>
@@ -131,7 +150,21 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
-        <div className="navbar-end">
+        <div className="navbar-end gap-4">
+          <label className="swap swap-rotate">
+            {/* this hidden checkbox controls the state */}
+            <input
+              onClick={toggleTheme}
+              type="checkbox"
+              className="theme-controller"
+              value="synthwave"
+            />
+            {theme === "light" ? (
+              <FaMoon className="text-gray-700" />
+            ) : (
+              <FaSun className="text-yellow-400" />
+            )}
+          </label>
           {user && (
             <div className="dropdown dropdown-end">
               <div
@@ -151,14 +184,16 @@ const Navbar = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-56 p-3 shadow-lg"
+                className="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-10 mt-3 w-56 p-3 shadow-lg border border-base-300"
               >
                 <li className="pointer-events-none">
                   <div className="flex flex-col p-2">
-                    <span className="text-[#001931] text-sm font-semibold">
+                    <span className="text-base-content text-lg font-semibold">
                       {user.displayName || "User"}
                     </span>
-                    <span className="text-gray-500 text-xs">{user.email}</span>
+                    <span className="text-base-content/60 text-sm">
+                      {user.email}
+                    </span>
                   </div>
                 </li>
                 <div className="divider my-1"></div>
@@ -179,7 +214,7 @@ const Navbar = () => {
                 <li>
                   <button
                     onClick={handleSignOut}
-                    className="text-red-600 hover:bg-red-50 flex items-center gap-3"
+                    className="text-error hover:bg-error/10 flex items-center gap-3"
                   >
                     <span>Logout</span>
                   </button>

@@ -75,7 +75,7 @@ const CommunityHighlights = () => {
     fetch("./communityHighlights.json")
       .then((res) => res.json())
       .then((data) => {
-        setHighlights(data);
+        setHighlights(Array.isArray(data) ? data : []);
         setLoading(false);
       })
       .catch((error) => {
@@ -118,16 +118,12 @@ const CommunityHighlights = () => {
   };
 
   const getHighlightColor = (type) => {
-    switch (type) {
-      case "trending":
-        return "from-orange-400 to-pink-500";
-      case "featured":
-        return "from-purple-400 to-indigo-500";
-      case "achievement":
-        return "from-green-400 to-teal-500";
-      default:
-        return "from-gray-400 to-gray-500";
-    }
+    const colors = {
+      trending: "from-orange-400 to-pink-500",
+      featured: "from-purple-400 to-indigo-500",
+      achievement: "from-green-400 to-teal-500",
+    };
+    return colors[type] || "from-gray-400 to-gray-500";
   };
 
   if (loading) {
@@ -153,29 +149,12 @@ const CommunityHighlights = () => {
 
   return (
     <div className="my-16 relative">
-      {/* Floating particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="particle"></div>
-        <div className="particle"></div>
-        <div className="particle"></div>
-        <div className="particle"></div>
-        <div className="particle"></div>
-        <div className="particle"></div>
-      </div>
-
       <MyContainer>
         <div className="text-center mb-12 relative z-10">
-          <div className="inline-block mb-4">
-            <Lottie
-              animationData={celebrationAnimation}
-              loop={true}
-              style={{ width: 80, height: 80 }}
-            />
-          </div>
-          <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
+          <h3 className="text-3xl md:text-4xl text-base-content font-bold mb-3">
             ✨ Community Highlights
           </h3>
-          <p className="text-gray-600 text-lg">
+          <p className="text-gray-600 dark:text-gray-400 text-lg">
             What's happening in our creative community
           </p>
         </div>
@@ -184,86 +163,43 @@ const CommunityHighlights = () => {
           {highlights.map((highlight, index) => (
             <div
               key={index}
-              className="highlight-card group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="group bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-2xl transition-all overflow-hidden border border-gray-100"
             >
-              {/* Highlight Image */}
               <div className="relative h-48 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <img
                   src={highlight.imageUrl}
                   alt={highlight.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                {/* Animated Type Badge */}
                 <div
-                  className={`type-badge absolute top-4 left-4 px-3 py-1 rounded-full bg-gradient-to-r ${getHighlightColor(
+                  className={`absolute top-4 left-4 px-3 py-1 rounded-full bg-linear-to-r ${getHighlightColor(
                     highlight.type
-                  )} text-white text-sm font-semibold flex items-center gap-2 shadow-lg z-20`}
+                  )} text-white text-xs font-bold uppercase`}
                 >
-                  {getHighlightIcon(highlight.type)}
-                  {highlight.type.charAt(0).toUpperCase() +
-                    highlight.type.slice(1)}
+                  {highlight.type}
                 </div>
               </div>
-
-              {/* Content */}
               <div className="p-6">
-                <h4 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-purple-600 transition-colors duration-300">
+                <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-2 line-clamp-1">
                   {highlight.title}
                 </h4>
-
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
                   {highlight.description}
                 </p>
-
-                {/* Meta Info */}
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between border-t border-gray-100 dark:border-slate-700 pt-4">
                   <div className="flex items-center gap-2">
                     <img
                       src={highlight.authorAvatar}
-                      alt={highlight.authorName}
-                      className="w-8 h-8 rounded-full object-cover ring-2 ring-purple-200 group-hover:ring-purple-400 transition-all duration-300"
+                      className="w-8 h-8 rounded-full"
+                      alt=""
                     />
-                    <span className="text-sm text-gray-700 font-medium">
+                    <span className="text-sm font-medium dark:text-gray-200">
                       {highlight.authorName}
                     </span>
                   </div>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-gray-400">
                     {highlight.timeAgo}
                   </span>
-                </div>
-
-                {/* Animated Stats */}
-                <div className="flex items-center gap-4 mb-4 text-sm text-gray-600">
-                  <div className="flex items-center gap-1 transform group-hover:scale-110 transition-transform duration-300">
-                    <svg
-                      className="w-4 h-4 text-red-500"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    {highlight.likes}
-                  </div>
-                  <div className="flex items-center gap-1 transform group-hover:scale-110 transition-transform duration-300">
-                    <svg
-                      className="w-4 h-4 text-blue-500"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    {highlight.comments}
-                  </div>
                 </div>
               </div>
             </div>

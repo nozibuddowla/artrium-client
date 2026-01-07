@@ -6,56 +6,54 @@ import { LiaSlackHash } from "react-icons/lia";
 
 const Footer = () => {
   return (
-    <div className="bg-base-200 ">
+    <div className="bg-base-content-200 border-t">
       <MyContainer>
-        <footer className="footer sm:footer-horizontal text-base-content p-10">
-          <nav>
-            <h6 className="footer-title">Services</h6>
+        <footer className="footer grid grid-cols-2 md-grid-cols-4 gap-8 text-base-content p-10">
+          <nav className="flex flex-col gap-2">
+            <h6 className="footer-title font-bold text-purple-700">Services</h6>
             <Link to="/exploreArtworks" className="link link-hover">
               Explore Artworks
             </Link>
-            <a className="link link-hover">Design</a>
-            <a className="link link-hover">Marketing</a>
-            <a className="link link-hover">Advertisement</a>
+            <Link className="link link-hover">Design</Link>
+            <Link className="link link-hover">Marketing</Link>
           </nav>
-          <nav>
+          <nav className="flex flex-col gap-2">
             <h6 className="footer-title">Company</h6>
-            <a className="link link-hover">About us</a>
-            <a className="link link-hover">Contact</a>
-            <a className="link link-hover">Jobs</a>
-            <a className="link link-hover">Press kit</a>
+            <Link className="link link-hover">About us</Link>
+            <Link className="link link-hover">Contact</Link>
+            <Link className="link link-hover">Jobs</Link>
           </nav>
-          <nav>
+          <nav className="flex flex-col gap-2">
             <h6 className="footer-title">Legal</h6>
-            <a className="link link-hover">Terms of use</a>
-            <a className="link link-hover">Privacy policy</a>
-            <a className="link link-hover">Cookie policy</a>
+            <Link className="link link-hover">Terms of use</Link>
+            <Link className="link link-hover">Privacy policy</Link>
           </nav>
-        </footer>
-        <footer className="footer bg-base-200 text-base-content border-base-300 border-t px-10 py-4">
-          <aside className="grid-flow-col items-center">
-            <LiaSlackHash size={24} color="#9810fa" />
-            <Link
-              to="/"
-              className="text-2xl font-black bg-linear-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent"
-            >
-              Artrium
-            </Link>
-          </aside>
-          <nav className="md:place-self-center md:justify-self-end">
-            <div className="grid grid-flow-col gap-4">
-              <a>
-                <FaXTwitter size={24} color="#9810fa" />
-              </a>
-              <a>
-                <FaYoutube size={24} color="#9810fa" />
-              </a>
-              <a>
-                <FaFacebookF size={24} color="#9810fa" />
-              </a>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <LiaSlackHash size={30} className="text-purple-600" />
+              <span className="text-2xl font-black bg-linear-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                Artrium
+              </span>
             </div>
-          </nav>
+            <div className="flex gap-4">
+              <FaXTwitter
+                size={20}
+                className="hover:text-purple-600 cursor-pointer"
+              />
+              <FaYoutube
+                size={20}
+                className="hover:text-purple-600 cursor-pointer"
+              />
+              <FaFacebookF
+                size={20}
+                className="hover:text-purple-600 cursor-pointer"
+              />
+            </div>
+          </div>
         </footer>
+        <div className="text-center py-6 border-t text-sm text-gray-500">
+          © {new Date().getFullYear()} Artrium. All rights reserved.
+        </div>
       </MyContainer>
     </div>
   );
