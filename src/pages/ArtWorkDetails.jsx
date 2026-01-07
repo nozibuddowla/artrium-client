@@ -4,6 +4,7 @@ import MyContainer from "../components/MyContainer";
 import Loader from "../components/Loader";
 import { FaHeart, FaStar } from "react-icons/fa6";
 import { AuthContext } from "../Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const ArtWorkDetails = () => {
   const [artwork, setArtwork] = useState(null);
@@ -35,6 +36,46 @@ const ArtWorkDetails = () => {
         setArtwork({ ...artwork, likes: (artwork.likes || 0) + 1 });
       });
   };
+
+  const handleFavorite = () => {
+    if (!user) return Swal.fire("Error", "Please login first!", "error");
+    const favoriteItem = {
+      artworkId: artwork._id,
+      title: artwork.title,
+      imageUrl: artwork.imageUrl,
+      userName: artwork.userName,
+      price: artwork.price,
+      userEmail: user.email,
+    };
+
+    fetch("http://localhost:3000/favorites", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(favoriteItem),
+    })
+      .then((res) => {
+        if (res.status === 400) {
+          Swal.fire(
+            "Note",
+            "This artwork is already in your favorites!",
+            "info"
+          );
+          return null;
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (data && data.insertedId) {
+          Swal.fire("Added!", "Added to your favorites.", "success");
+        }
+      })
+      .catch((err) => {
+        console.error("Error:", err);
+        Swal.fire("Error", "Something went wrong.", "error");
+      });
+  };
+
+  
 
   if (loading) {
     return (
@@ -112,7 +153,10 @@ const ArtWorkDetails = () => {
                 <FaHeart /> Like ({artwork.likes || 0})
               </button>
 
-              <button className="btn bg-[#C89446] text-white hover:bg-[#b0823b] border-none rounded-full px-8">
+              <button
+                onClick={handleFavorite}
+                className="btn bg-[#C89446] text-white hover:bg-[#b0823b] border-none rounded-full px-8"
+              >
                 <FaStar /> Add to Favorites
               </button>
             </div>
@@ -128,9 +172,7 @@ const ArtWorkDetails = () => {
                 <h3 className="text-2xl font-serif font-bold">
                   {artwork.userName}
                 </h3>
-                <p className="text-gray-500">
-                  {artwork.userEmail}
-                </p>
+                <p className="text-gray-500">{artwork.userEmail}</p>
                 <div className="mt-2 inline-block bg-purple-100 text-purple-700 font-bold px-3 py-1 rounded-full text-lg">
                   {artwork.artistTotalCount} Artworks
                 </div>

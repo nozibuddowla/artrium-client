@@ -28,6 +28,8 @@ const AddArtwork = () => {
     "Urban",
     "Impressionism",
     "Collage",
+    "Cultural",
+    "Street Photography",
   ];
 
   const handleSubmit = async (e) => {
@@ -61,7 +63,7 @@ const AddArtwork = () => {
       userPhoto: user?.photoURL,
       userEmail,
       createdAt,
-      likes: 0
+      likes: 0,
     };
 
     //   console.log(artworkData);

@@ -45,45 +45,6 @@ const Navbar = () => {
           Explore Artworks
         </NavLink>
       </li>
-      {/* <li>
-        {" "}
-        <NavLink
-          to="/add-artwork"
-          className={({ isActive }) =>
-            isActive
-              ? "text-purple-600 font-bold"
-              : "font-medium hover:text-purple-600"
-          }
-        >
-          Add Artwork
-        </NavLink>{" "}
-      </li> */}
-      {/* <li>
-        {" "}
-        <NavLink
-          to="/myGallery"
-          className={({ isActive }) =>
-            isActive
-              ? "text-purple-600 font-bold"
-              : "font-medium hover:text-purple-600"
-          }
-        >
-          My Gallery
-        </NavLink>{" "}
-      </li> */}
-      {/* <li>
-        {" "}
-        <NavLink
-          to="/myFavorites"
-          className={({ isActive }) =>
-            isActive
-              ? "text-purple-600 font-bold"
-              : "font-medium hover:text-purple-600"
-          }
-        >
-          My Favorites
-        </NavLink>{" "}
-      </li> */}
       {user ? (
         <>
           <li>
@@ -115,7 +76,7 @@ const Navbar = () => {
           <li>
             {" "}
             <NavLink
-              to="/myFavorites"
+              to="/my-favorites"
               className={({ isActive }) =>
                 isActive
                   ? "text-purple-600 font-bold"

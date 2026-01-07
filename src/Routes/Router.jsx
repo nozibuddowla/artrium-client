@@ -12,6 +12,7 @@ import ArtWorkDetails from "../pages/ArtWorkDetails";
 import ForgetPass from "../pages/ForgetPass";
 import AddArtwork from "../pages/AddArtwork";
 import MyGallery from "../pages/MyGallery";
+import MyFavorites from "../pages/MyFavorites";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyGallery />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/my-favorites",
+        element: (
+          <PrivateRoute>
+            <MyFavorites />
           </PrivateRoute>
         ),
       },
