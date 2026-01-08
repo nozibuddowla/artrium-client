@@ -6,6 +6,7 @@ import { FaHeart, FaStar } from "react-icons/fa6";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const ArtWorkDetails = () => {
   const [artwork, setArtwork] = useState(null);
@@ -23,7 +24,7 @@ const ArtWorkDetails = () => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     loadArtworksDetails();
@@ -31,13 +32,72 @@ const ArtWorkDetails = () => {
 
   // console.log(artworks);
 
-  const handleLike = () => {
-    fetch(`http://localhost:3000/artworks/${id}/like`, { method: "PATCH" })
-      .then((res) => res.json())
-      .then(() => {
-        // Update local state to show the new like count immediately
-        setArtwork({ ...artwork, likes: (artwork.likes || 0) + 1 });
-      });
+  // const handleLike = async () => {
+  //   if (!user) {
+  //     return Swal.fire("Error", "Please login to like this artwork!", "error");
+  //   }
+
+  //   try {
+  //     const response = await axios.patch(
+  //       `http://localhost:3000/artworks/${id}/like`,
+  //       {
+  //         userEmail: user.email,
+  //       }
+  //     );
+
+  //     if (response.data.modifiedCount > 0) {
+  //       // Logic to update the local state so the UI reflects the change
+  //       const adjustment = response.data.isLiked ? 1 : -1;
+  //       setArtwork({
+  //         ...artwork,
+  //         likes: (artwork.likes || 0) + adjustment,
+  //       });
+
+  //       if (response.data.isLiked) {
+  //         toast.success("Added to liked artworks!");
+  //       } else {
+  //         toast.info("Removed from liked artworks.");
+  //       }
+  //     }
+  //   } catch (err) {
+  //     console.error("Failed to like:", err);
+  //     toast.error("Something went wrong!");
+  //   }
+  // };
+
+  const handleLike = async () => {
+    if (!user) {
+      return Swal.fire("Error", "Please login to like this artwork!", "error");
+    }
+
+    try {
+      // Axios patch: URL, then Data, then Config
+      const response = await axios.patch(
+        `http://localhost:3000/artworks/${id}/like`,
+        {
+          userEmail: user.email,
+        }
+      );
+
+      if (response.data.modifiedCount > 0) {
+        // Logic to update the local state so the UI reflects the change
+        const adjustment = response.data.isLiked ? 1 : -1;
+        setArtwork({
+          ...artwork,
+          likes: (artwork.likes || 0) + adjustment,
+        });
+
+        // Show toast based on whether it was a like or unlike
+        if (response.data.isLiked) {
+          toast.success("Added to liked artworks!");
+        } else {
+          toast.info("Removed from liked artworks.");
+        }
+      }
+    } catch (err) {
+      console.error("Failed to like:", err);
+      toast.error("Something went wrong!");
+    }
   };
 
   const handleFavorite = () => {
@@ -78,8 +138,6 @@ const ArtWorkDetails = () => {
       });
   };
 
-  
-
   if (loading) {
     return (
       <div className="min-h-screen flex justify-center items-center dark:bg-slate-900 transition-colors">
@@ -95,9 +153,7 @@ const ArtWorkDetails = () => {
       <div className="min-h-screen dark:bg-slate-900 transition-colors">
         <MyContainer>
           <div className="flex flex-col justify-center items-center py-20">
-            <h1 className="font-bold text-2xl">
-              Artwork not found!
-            </h1>
+            <h1 className="font-bold text-2xl">Artwork not found!</h1>
           </div>
         </MyContainer>
       </div>
@@ -109,9 +165,7 @@ const ArtWorkDetails = () => {
       <MyContainer>
         <div className="max-w-6xl mx-auto px-4">
           <h1 className="text-4xl font-bold">{artwork?.title}</h1>
-          <p className="text-xl mt-2">
-            By {artwork?.userName}
-          </p>
+          <p className="text-xl mt-2">By {artwork?.userName}</p>
 
           <div className="mt-8">
             <img
@@ -128,28 +182,19 @@ const ArtWorkDetails = () => {
               </h3>
               <div className="space-y-3">
                 <p>
-                  <span className="font-semibold">
-                    Category:
-                  </span>{" "}
+                  <span className="font-semibold">Category:</span>{" "}
                   {artwork.category}
                 </p>
                 <p>
-                  <span className="font-semibold">
-                    Medium:
-                  </span>{" "}
+                  <span className="font-semibold">Medium:</span>{" "}
                   {artwork.medium}
                 </p>
                 <p>
-                  <span className="font-semibold">
-                    Dimensions:
-                  </span>{" "}
+                  <span className="font-semibold">Dimensions:</span>{" "}
                   {artwork.dimensions}
                 </p>
                 <p>
-                  <span className="font-semibold">
-                    Price:
-                  </span>{" "}
-                  ${artwork.price}
+                  <span className="font-semibold">Price:</span> ${artwork.price}
                 </p>
               </div>
             </div>
@@ -158,9 +203,7 @@ const ArtWorkDetails = () => {
               <h3 className="text-2xl font-bold mb-4 border-b dark:border-slate-700 pb-2">
                 Description
               </h3>
-              <p className="leading-relaxed">
-                {artwork.description}
-              </p>
+              <p className="leading-relaxed">{artwork.description}</p>
             </div>
           </div>
 
@@ -192,12 +235,8 @@ const ArtWorkDetails = () => {
                 </div>
               </div>
               <div>
-                <h3 className="text-xl font-bold">
-                  {artwork.userName}
-                </h3>
-                <p className="text-sm">
-                  {artwork.userEmail}
-                </p>
+                <h3 className="text-xl font-bold">{artwork.userName}</h3>
+                <p className="text-sm">{artwork.userEmail}</p>
                 <div className="mt-2 inline-block bg-purple-900/40 font-bold px-3 py-1 rounded-full text-sm">
                   {artwork.artistTotalCount} Artworks
                 </div>

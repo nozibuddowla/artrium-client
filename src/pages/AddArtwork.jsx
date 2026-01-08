@@ -31,6 +31,7 @@ const AddArtwork = () => {
     "Cultural",
     "Street Photography",
     "Floral",
+    "Realism",
   ];
 
   const handleSubmit = async (e) => {
@@ -171,7 +172,6 @@ const AddArtwork = () => {
                   >
                     <option
                       value=""
-                      disabled
                       className="dark:text-gray-900 text-gray-200"
                     >
                       Select a category
