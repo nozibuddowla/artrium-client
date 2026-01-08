@@ -109,7 +109,7 @@ const Register = () => {
         <div className="max-w-150 mx-auto px-4">
           <div className="hero-content flex-col">
             {/* Header */}
-            <h1 className="text-4xl 2xl:text-5xl font-bold font-serif mb-10 text-gray-900">
+            <h1 className="text-4xl 2xl:text-5xl font-bold font-serif mb-10">
               Register
             </h1>
 
@@ -117,7 +117,7 @@ const Register = () => {
               {/* Username */}
               <div className="form-control w-full">
                 <label className="label mb-2">
-                  <span className="text-sm font-bold text-gray-800">
+                  <span className="text-sm font-bold">
                     User Name <span className="text-red-500">*</span>
                   </span>
                 </label>
@@ -133,7 +133,7 @@ const Register = () => {
               {/* photo url */}
               <div className="form-control w-full">
                 <label className="label mb-2">
-                  <span className="text-sm font-bold text-gray-800">
+                  <span className="text-sm font-bold">
                     Photo <span className="text-red-500">*</span>
                   </span>
                 </label>
@@ -149,7 +149,7 @@ const Register = () => {
               {/* Username/Email Field */}
               <div className="form-control w-full">
                 <label className="label mb-2">
-                  <span className="text-sm font-bold text-gray-800">
+                  <span className="text-sm font-bold">
                     Email address <span className="text-red-500">*</span>
                   </span>
                 </label>
@@ -165,7 +165,7 @@ const Register = () => {
               {/* Password Field */}
               <div className="form-control w-full">
                 <label className="label mb-2">
-                  <span className="text-sm font-bold text-gray-800">
+                  <span className="text-sm font-bold">
                     Password <span className="text-red-500">*</span>
                   </span>
                 </label>
@@ -192,19 +192,19 @@ const Register = () => {
                   </p>
                 )}
 
-                <p className="text-gray-500 text-xs mt-2 ml-4">
+                <p className="text-xs mt-2 ml-4">
                   Must contain: uppercase, lowercase letter, and minimum 6
                   characters
                 </p>
               </div>
 
               <div className="w-full flex items-center gap-2">
-                <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">
+                <span className="text-sm transition-colors">
                   Already have an account?
                 </span>
                 <Link
                   to="/login"
-                  className="text-sm text-gray-500 hover:text-gray-900 underline underline-offset-4 decoration-dotted transition-colors"
+                  className="text-sm underline underline-offset-4 decoration-dotted transition-colors"
                 >
                   Log In
                 </Link>

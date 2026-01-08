@@ -35,19 +35,53 @@ const ArtWorks = () => {
 
   if (loading) {
     return (
-      <div className="my-16 bg-white dark:bg-slate-900 transition-colors duration-300">
+      <div className="my-16 transition-colors duration-300">
         <MyContainer>
-          <h1 className="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100">
+          <h1 className="text-3xl font-bold text-center mb-12 ">
             Explore Artworks
           </h1>
 
+          <div className="relative max-w-2xl mx-auto mb-12">
+            <div className="relative flex items-center">
+              <input
+                type="text"
+                placeholder="Search by title, artist, or category..."
+                className="input w-full rounded-full pl-6 pr-32 focus:border-purple-500 outline-none h-14 shadow-lg transition-all"
+              />
+              <div className="absolute right-2 flex gap-2">
+                {search && (
+                  <button
+                    onClick={() => setSearch("")}
+                    className="btn btn-ghost btn-sm rounded-full"
+                  >
+                    ✕
+                  </button>
+                )}
+                <button
+                  onClick={() => loadArtworks(search)}
+                  className="btn bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600 border-none text-white rounded-full px-6"
+                >
+                  Search
+                </button>
+              </div>
+            </div>
+            {search && (
+              <p className=" mt-2 ml-6">
+                Showing results for:{" "}
+                <span className="font-semibold text-purple-600 dark:text-purple-400">
+                  "{search}"
+                </span>
+              </p>
+            )}
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
+            {[...Array(12)].map((_, i) => (
               <div key={i} className="animate-pulse">
-                <div className="bg-gray-300 dark:bg-slate-700 h-64 rounded-t-lg"></div>
-                <div className="p-4 bg-gray-100 dark:bg-slate-800 rounded-b-lg">
-                  <div className="h-4 bg-gray-300 dark:bg-slate-700 rounded mb-2"></div>
-                  <div className="h-3 bg-gray-300 dark:bg-slate-700 rounded w-3/4"></div>
+                <div className="bg-gray-300  h-64 rounded-t-lg"></div>
+                <div className="p-4 bg-gray-100  rounded-b-lg">
+                  <div className="h-4 bg-gray-300  rounded mb-2"></div>
+                  <div className="h-3 bg-gray-300  rounded w-3/4"></div>
                 </div>
               </div>
             ))}

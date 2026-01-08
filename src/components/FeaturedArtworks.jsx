@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import axios from "axios";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { FaHeart, FaUser } from "react-icons/fa";
+import { Slide } from "react-awesome-reveal";
 
 const FeaturedArtworks = () => {
   const [artworks, setArtworks] = useState([]);
@@ -58,9 +59,11 @@ const FeaturedArtworks = () => {
   return (
     <div className="my-16">
       <MyContainer>
-        <h3 className="text-3xl font-bold text-center mb-12 text-base-content">
-          Featured Artworks
-        </h3>
+        <Slide direction="down" triggerOnce>
+          <h3 className="text-3xl font-bold text-center mb-12 text-base-content">
+            Featured Artworks
+          </h3>
+        </Slide>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {artworks.slice(0, 6).map((artwork) => (

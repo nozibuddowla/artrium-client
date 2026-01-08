@@ -184,7 +184,7 @@ const Navbar = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-10 mt-3 w-56 p-3 shadow-lg border border-base-300"
+                className="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-10 mt-3 p-3 shadow-lg border border-base-300"
               >
                 <li className="pointer-events-none">
                   <div className="flex flex-col p-2">

@@ -32,6 +32,10 @@ const AddArtwork = () => {
     "Street Photography",
     "Floral",
     "Realism",
+    "Conceptual",
+    "Seascape",
+    "Figurative",
+    "Abstract Expressionism",
   ];
 
   const handleSubmit = async (e) => {
@@ -319,9 +323,7 @@ const AddArtwork = () => {
                     />
                   </div>
                   <div>
-                    <label className="text-xs mb-1 block">
-                      Email
-                    </label>
+                    <label className="text-xs mb-1 block">Email</label>
                     <input
                       type="email"
                       value={user?.email || ""}

@@ -2,6 +2,7 @@ import Lottie from "lottie-react";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import MyContainer from "./MyContainer";
+import { Fade, Slide } from "react-awesome-reveal";
 
 const CommunityHighlights = () => {
   const [highlights, setHighlights] = useState([]);
@@ -151,12 +152,16 @@ const CommunityHighlights = () => {
     <div className="my-16 relative">
       <MyContainer>
         <div className="text-center mb-12 relative z-10">
-          <h3 className="text-3xl md:text-4xl text-base-content font-bold mb-3">
-            ✨ Community Highlights
-          </h3>
-          <p className="text-gray-600 dark:text-gray-400 text-lg">
-            What's happening in our creative community
-          </p>
+          <Slide direction="down" triggerOnce>
+            <h3 className="text-3xl md:text-4xl text-base-content font-bold mb-3">
+              ✨ Community Highlights
+            </h3>
+          </Slide>
+          <Fade>
+            <p className=" text-lg">
+              What's happening in our creative community
+            </p>
+          </Fade>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">

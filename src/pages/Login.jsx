@@ -74,7 +74,7 @@ const Login = () => {
         <div className="max-w-150 mx-auto px-4">
           <div className="hero-content flex-col">
             {/* Header */}
-            <h1 className="text-4xl 2xl:text-5xl font-bold font-serif mb-10 text-gray-900">
+            <h1 className="text-4xl 2xl:text-5xl font-bold font-serif mb-10">
               Login
             </h1>
 
@@ -82,7 +82,7 @@ const Login = () => {
               {/* Email Field */}
               <div className="form-control w-full">
                 <label className="label mb-2">
-                  <span className="text-sm font-bold text-gray-800">
+                  <span className="text-sm font-bold">
                     Email address <span className="text-red-500">*</span>
                   </span>
                 </label>
@@ -99,7 +99,7 @@ const Login = () => {
               {/* Password Field */}
               <div className="form-control w-full">
                 <label className="label mb-2">
-                  <span className="text-sm font-bold text-gray-800">
+                  <span className="text-sm font-bold">
                     Password <span className="text-red-500">*</span>
                   </span>
                 </label>
@@ -128,26 +128,26 @@ const Login = () => {
                     type="checkbox"
                     className="w-4 h-4 border-gray-300 rounded focus:ring-0 accent-[#C89446]"
                   />
-                  <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">
+                  <span className="text-sm">
                     Remember me
                   </span>
                 </label>
                 <button
                   onClick={handleForget}
                   type="button"
-                  className="btn btn-ghost text-sm text-gray-500 hover:text-gray-900 underline underline-offset-4 decoration-dotted transition-colors"
+                  className="btn btn-ghost text-sm underline underline-offset-4 decoration-dotted transition-colors"
                 >
                   Lost your password?
                 </button>
               </div>
 
               <div className="w-full flex items-center gap-2">
-                <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">
+                <span className="text-sm">
                   Don't have an account?
                 </span>
                 <Link
                   to="/signup"
-                  className="text-sm text-gray-500 hover:text-gray-900 underline underline-offset-4 decoration-dotted transition-colors"
+                  className="text-sm underline underline-offset-4 decoration-dotted transition-colors"
                 >
                   Register
                 </Link>

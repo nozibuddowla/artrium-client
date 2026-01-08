@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Fade, Slide } from "react-awesome-reveal";
 import MyContainer from "../components/MyContainer";
 import { AuthContext } from "../Provider/AuthProvider";
 import axios from "axios";
@@ -110,68 +111,73 @@ const MyGallery = () => {
     <div className="py-16 px-5">
       <title>My Artworks</title>
       <MyContainer>
-        <h1 className="text-3xl font-bold text-center mb-12">My Artworks</h1>
+        <Slide direction="down" triggerOnce>
+          <h1 className="text-3xl font-bold text-center mb-12">My Artworks</h1>
+        </Slide>
+
         <div className="overflow-x-auto rounded-box border border-white/20 bg-white/40 backdrop-blur-md shadow-xl">
-          <table className="table table-pin-rows table-zebra">
-            {/* head */}
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Medium</th>
-                <th>Dimension</th>
-                <th>Price</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {myArtworks.map((artWork) => (
-                <tr key={artWork._id}>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <Link
-                        to={`/artwork/details/${artWork?._id}`}
-                        className="avatar"
-                      >
-                        <div className="mask mask-squircle h-16 w-16">
-                          <img src={artWork?.imageUrl} alt={artWork?.title} />
-                        </div>
-                      </Link>
-                      <div>
+          <Fade>
+            <table className="table table-pin-rows table-zebra">
+              {/* head */}
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Medium</th>
+                  <th>Dimension</th>
+                  <th>Price</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* row 1 */}
+                {myArtworks.map((artWork) => (
+                  <tr key={artWork._id}>
+                    <td>
+                      <div className="flex items-center gap-3">
                         <Link
                           to={`/artwork/details/${artWork?._id}`}
-                          className="font-bold"
+                          className="avatar"
                         >
-                          {artWork?.title}
+                          <div className="mask mask-squircle h-16 w-16">
+                            <img src={artWork?.imageUrl} alt={artWork?.title} />
+                          </div>
                         </Link>
-                        <div className="text-sm opacity-50">
-                          {artWork.category}
+                        <div>
+                          <Link
+                            to={`/artwork/details/${artWork?._id}`}
+                            className="font-bold"
+                          >
+                            {artWork?.title}
+                          </Link>
+                          <div className="text-sm opacity-50">
+                            {artWork.category}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </td>
-                  <td> {artWork?.medium} </td>
-                  <td> {artWork?.dimensions} </td>
-                  <td> {artWork?.price} </td>
-                  <td className="flex items-center gap-2">
-                    <button
-                      onClick={() => handleDelete(artWork?._id)}
-                      className="btn btn-error"
-                    >
-                      <MdDelete size={18} color="white" />
-                    </button>
-                    <label
-                      htmlFor="update-modal"
-                      className="btn bg-linear-to-br from-[#632ee3] to-[#9f62f2]"
-                      onClick={() => setSelectedArtwork(artWork)}
-                    >
-                      <FaEdit size={18} color="white" />
-                    </label>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    </td>
+                    <td> {artWork?.medium} </td>
+                    <td> {artWork?.dimensions} </td>
+                    <td> {artWork?.price} </td>
+                    <td className="flex items-center gap-2">
+                      <button
+                        onClick={() => handleDelete(artWork?._id)}
+                        className="btn btn-error"
+                      >
+                        <MdDelete size={18} color="white" />
+                      </button>
+                      <label
+                        htmlFor="update-modal"
+                        className="btn bg-linear-to-br from-[#632ee3] to-[#9f62f2]"
+                        onClick={() => setSelectedArtwork(artWork)}
+                      >
+                        <FaEdit size={18} color="white" />
+                      </label>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Fade>
         </div>
 
         <input type="checkbox" id="update-modal" className="modal-toggle" />

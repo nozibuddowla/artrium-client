@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import MyContainer from "./MyContainer";
 import Lottie from "lottie-react";
 import { Link } from "react-router";
+import { Fade, Slide } from "react-awesome-reveal";
 
 const TopArtists = () => {
   const [artists, setArtists] = useState([]);
@@ -107,12 +108,16 @@ const TopArtists = () => {
               style={{ width: 80, height: 80 }}
             />
           </div>
-          <h3 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-3">
-            🏆 Top Artists of the Week
-          </h3>
-          <p className="text-gray-600 dark:text-gray-300 text-lg">
-            Celebrating our most inspiring creators
-          </p>
+          <Slide direction="down" triggerOnce>
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-3">
+              🏆 Top Artists of the Week
+            </h3>
+          </Slide>
+          <Fade>
+            <p className="text-gray-600 dark:text-gray-300 text-lg">
+              Celebrating our most inspiring creators
+            </p>
+          </Fade>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
