@@ -4,37 +4,40 @@ import MyContainer from "../components/MyContainer";
 import auth from "../firebase/firebase.config";
 import { updateProfile } from "firebase/auth";
 import { toast } from "react-toastify";
-import { MdEmail } from "react-icons/md";
+import { MdEmail, MdOutlineDescription } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
+import axios from "axios";
 
 const Profile = () => {
   const { user, setUser } = useContext(AuthContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleUpdate = (event) => {
+  const handleUpdate = async (event) => {
     event.preventDefault();
-    const name = event.target.name.value;
-    const photoUrl = event.target.photoUrl.value;
+    const form = event.currentTarget;
+    const name = form.name.value;
+    const photoUrl = form.photoUrl.value;
+    const bio = form.bio.value;
 
-    updateProfile(auth.currentUser, {
-      displayName: name,
-      photoURL: photoUrl,
-    })
-      .then(() => {
-        // console.log(userCredential.user);
-        setUser({
-          ...user,
-          displayName: name,
-          photoURL: photoUrl,
-        });
-        toast.success("Your profile updated!");
-        setIsModalOpen(false);
-        event.target.reset();
-      })
-      .catch((error) => {
-        console.error("Profile update error:", error);
-        toast.error("Failed to update profile");
+    try {
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+        photoURL: photoUrl,
       });
+
+      await axios.put("http://localhost:3000/users", {
+        email: user.email,
+        displayName: name,
+        photoURL: photoUrl,
+        bio: bio,
+      });
+
+      setUser({ ...user, displayName: name, photoURL: photoUrl, bio: bio });
+      toast.success("Profile synced!");
+      setIsModalOpen(false);
+    } catch (error) {
+      toast.error("Update failed");
+    }
   };
 
   return (
@@ -99,17 +102,17 @@ const Profile = () => {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-black dark:bg-white rounded-3xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto animate-scale-in">
+          <div className="bg-base-content rounded-3xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto animate-scale-in">
             {/* Modal Header */}
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                <h2 className="text-2xl font-bold text-base-100 flex items-center gap-2">
                   <FaRegEdit size={24} color="#9810fa" />
                   Edit Profile
                 </h2>
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                  className=" text-gray-400 hover:text-red-600 transition-colors cursor-pointer"
                 >
                   <svg
                     className="w-6 h-6"
@@ -147,80 +150,78 @@ const Profile = () => {
                   </div>
                 </div>
 
-                {/* Name Field */}
-                <div className="form-control">
-                  <label className="label">
-                    <span className="text-sm font-bold text-gray-800">
-                      Display Name
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    id="name-input"
-                    defaultValue={user?.displayName}
-                    placeholder="Enter your name"
-                    className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:ring-2 focus:ring-purple-200 focus:border-transparent outline-none placeholder:text-gray-400 text-gray-700 transition-all"
-                  />
-                </div>
+                <form onSubmit={handleUpdate}>
+                  {/* Name Field */}
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="text-sm font-bold text-base-100">
+                        Display Name
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      id="name-input"
+                      defaultValue={user?.displayName}
+                      name="name"
+                      placeholder="Enter your name"
+                      className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:ring-2 focus:ring-purple-200 focus:border-transparent outline-none placeholder:text-gray-400 text-gray-700 transition-all"
+                    />
+                  </div>
 
-                {/* Photo URL Field */}
-                <div className="form-control">
-                  <label className="label">
-                    <span className="text-sm font-bold text-gray-800">
-                      Photo URL
-                    </span>
-                  </label>
-                  <input
-                    type="url"
-                    id="photo-input"
-                    defaultValue={user?.photoURL}
-                    placeholder="Enter your photo URL"
-                    className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:ring-2 focus:ring-purple-200 focus:border-transparent outline-none placeholder:text-gray-400 text-gray-700 transition-all"
-                  />
-                  <p className="text-xs text-gray-500 mt-2">
-                    Enter a valid image URL (e.g., from Imgur, Cloudinary)
-                  </p>
-                </div>
+                  {/* Photo URL Field */}
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="text-sm font-bold text-base-100">
+                        Photo URL
+                      </span>
+                    </label>
+                    <input
+                      type="url"
+                      id="photo-input"
+                      defaultValue={user?.photoURL}
+                      name="photoUrl"
+                      placeholder="Enter your photo URL"
+                      className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:ring-2 focus:ring-purple-200 focus:border-transparent outline-none placeholder:text-gray-400 text-gray-700 transition-all"
+                    />
+                    <p className="text-xs text-base-100 mt-2">
+                      Enter a valid image URL (e.g., from Imgur, Cloudinary)
+                    </p>
+                  </div>
 
-                {/* Buttons */}
-                <div className="flex gap-3 pt-4">
-                  <button
-                    type="button"
-                    onClick={() => setIsModalOpen(false)}
-                    className="flex-1 px-6 py-3 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-all duration-300"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      const name = document.getElementById("name-input").value;
-                      const photoUrl =
-                        document.getElementById("photo-input").value;
+                  {/* Bio */}
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="text-sm font-bold text-base-100">
+                        Description <span className="text-red-500">*</span>
+                      </span>
+                    </label>
+                    <textarea
+                      name="bio"
+                      defaultValue={user?.bio}
+                      rows="4"
+                      placeholder="Describe your artwork..."
+                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border dark:border-gray-200 border-slate-700  focus:ring-2 focus:ring-purple-200 outline-none placeholder:text-gray-400 text-gray-700 transition-all resize-none"
+                      required
+                    ></textarea>
+                  </div>
 
-                      updateProfile(auth.currentUser, {
-                        displayName: name,
-                        photoURL: photoUrl,
-                      })
-                        .then(() => {
-                          setUser({
-                            ...user,
-                            displayName: name,
-                            photoURL: photoUrl,
-                          });
-                          toast.success("Profile updated successfully!");
-                          setIsModalOpen(false);
-                        })
-                        .catch((error) => {
-                          console.error("Profile update error:", error);
-                          toast.error("Failed to update profile");
-                        });
-                    }}
-                    className="flex-1 px-6 py-3 bg-linear-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 transform hover:scale-105"
-                  >
-                    Save Changes
-                  </button>
-                </div>
+                  {/* Buttons */}
+                  <div className="flex gap-3 pt-4">
+                    <button
+                      type="button"
+                      onClick={() => setIsModalOpen(false)}
+                      className="btn flex-1 px-6 py-3 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-all duration-300"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="btn flex-1 px-6 py-3 bg-linear-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                    >
+                      Save Changes
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>

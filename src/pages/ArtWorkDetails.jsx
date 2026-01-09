@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import MyContainer from "../components/MyContainer";
 import Loader from "../components/Loader";
 import { FaHeart, FaStar } from "react-icons/fa6";
@@ -227,15 +227,21 @@ const ArtWorkDetails = () => {
             <div className="p-6 rounded-2xl flex items-center gap-6 border">
               <div className="avatar">
                 <div className="w-20 rounded-full ring ring-[#C89446] ring-offset-base-100 dark:ring-offset-slate-800 ring-offset-2">
-                  <img
-                    src={artwork.userPhoto}
-                    alt={artwork.userName}
-                    className="object-cover"
-                  />
+                  <Link to={`/artist/${artwork.userEmail}`}>
+                    <img
+                      src={artwork.userPhoto}
+                      alt={artwork.userName}
+                      className="object-cover"
+                    />
+                  </Link>
                 </div>
               </div>
               <div>
-                <h3 className="text-xl font-bold">{artwork.userName}</h3>
+                <Link to={`/artist/${artwork.userEmail}`}>
+                  <h3 className="text-xl font-bold hover:text-[#C89446] transition-colors">
+                    {artwork.userName}
+                  </h3>
+                </Link>
                 <p className="text-sm">{artwork.userEmail}</p>
                 <div className="mt-2 inline-block bg-purple-900/40 font-bold px-3 py-1 rounded-full text-sm">
                   {artwork.artistTotalCount} Artworks

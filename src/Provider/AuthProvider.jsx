@@ -8,6 +8,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
+import axios from "axios";
 
 export const AuthContext = createContext();
 
@@ -42,8 +43,23 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+
+      if (currentUser) {
+        const userData = {
+          displayName: currentUser.displayName,
+          email: currentUser.email,
+          photoURL: currentUser.photoURL,
+          lastSignInTime: currentUser.metadata.lastSignInTime,
+        };
+
+        try {
+          await axios.put("http://localhost:3000/users", userData);
+        } catch (error) {
+          console.error("Error syncing user to DB:", error);
+        }
+      }
       setLoading(false);
     });
 

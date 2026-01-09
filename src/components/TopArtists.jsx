@@ -3,6 +3,7 @@ import MyContainer from "./MyContainer";
 import Lottie from "lottie-react";
 import { Link } from "react-router";
 import { Fade, Slide } from "react-awesome-reveal";
+import axios from "axios";
 
 const TopArtists = () => {
   const [artists, setArtists] = useState([]);
@@ -65,16 +66,18 @@ const TopArtists = () => {
   };
 
   useEffect(() => {
-    fetch("./topArtists.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setArtists(data);
-        setLoading(false);
-      })
-      .catch((error) => {
+    const getTopArtists = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get("http://localhost:3000/top-artists");
+        setArtists(res.data);
+      } catch (error) {
         console.error("Error fetching top artists:", error);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    getTopArtists();
   }, []);
 
   if (loading) {
@@ -109,12 +112,12 @@ const TopArtists = () => {
             />
           </div>
           <Slide direction="down" triggerOnce>
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-3">
+            <h3 className="text-3xl md:text-4xl font-bold mb-3">
               🏆 Top Artists of the Week
             </h3>
           </Slide>
           <Fade>
-            <p className="text-gray-600 dark:text-gray-300 text-lg">
+            <p className="text-lg">
               Celebrating our most inspiring creators
             </p>
           </Fade>
@@ -147,15 +150,15 @@ const TopArtists = () => {
                   )}
                 </div>
               </div>
-              <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-1">
+              <h4 className="text-xl font-bold mb-1">
                 {artist.name}
               </h4>
-              <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
+              <p className="mb-3">
                 {artist.artworkCount} Artworks
               </p>
               <Link
                 to={`/artist/${artist._id}`}
-                className="inline-block px-6 py-2 bg-white dark:bg-slate-800 text-purple-600 dark:text-purple-400 font-semibold rounded-full border-2 border-purple-600 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-500 transition-all"
+                className="inline-block px-6 py-2 text-purple-600 dark:text-purple-400 font-semibold rounded-full border-2 border-purple-600 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-500 transition-all"
               >
                 View Profile
               </Link>

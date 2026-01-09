@@ -13,6 +13,8 @@ import ForgetPass from "../pages/ForgetPass";
 import AddArtwork from "../pages/AddArtwork";
 import MyGallery from "../pages/MyGallery";
 import MyFavorites from "../pages/MyFavorites";
+import TopArtists from "../components/TopArtists";
+import ArtistProfile from "../pages/ArtistProfile";
 
 const router = createBrowserRouter([
   {
@@ -77,6 +79,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyFavorites />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/artist/:id",
+        element: (
+          <PrivateRoute>
+            <ArtistProfile />
           </PrivateRoute>
         ),
       },
