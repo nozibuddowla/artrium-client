@@ -21,7 +21,7 @@ const ArtistProfile = () => {
     const fetchArtist = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/artist-details/${id}`
+          `https://artrium-server.vercel.app/artist-details/${id}`
         );
         setArtistData(res.data);
       } catch (err) {
@@ -49,7 +49,7 @@ const ArtistProfile = () => {
       });
 
       // Update MongoDB
-      await axios.put("http://localhost:3000/users", {
+      await axios.put("https://artrium-server.vercel.app/users", {
         email: currentUser.email,
         displayName: name,
         photoURL: photoUrl,
@@ -78,7 +78,7 @@ const ArtistProfile = () => {
 
     try {
       const res = await axios.patch(
-        `http://localhost:3000/users/follow/${artistData.user.email}`,
+        `https://artrium-server.vercel.app/users/follow/${artistData.user.email}`,
         {
           followerEmail: currentUser.email,
         }
@@ -191,9 +191,7 @@ const ArtistProfile = () => {
               />
               <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
                 <h3 className="text-white text-xl font-bold">
-                  <Link to={`/artwork/details/${art._id}`}>
-                    {art.title}
-                  </Link>
+                  <Link to={`/artwork/details/${art._id}`}>{art.title}</Link>
                 </h3>
                 <p className="text-gray-300">{art.category}</p>
               </div>

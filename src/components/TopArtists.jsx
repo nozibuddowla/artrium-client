@@ -69,7 +69,9 @@ const TopArtists = () => {
     const getTopArtists = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("http://localhost:3000/top-artists");
+        const res = await axios.get(
+          "https://artrium-server.vercel.app/top-artists"
+        );
         setArtists(res.data);
       } catch (error) {
         console.error("Error fetching top artists:", error);
@@ -117,9 +119,7 @@ const TopArtists = () => {
             </h3>
           </Slide>
           <Fade>
-            <p className="text-lg">
-              Celebrating our most inspiring creators
-            </p>
+            <p className="text-lg">Celebrating our most inspiring creators</p>
           </Fade>
         </div>
 
@@ -150,12 +150,8 @@ const TopArtists = () => {
                   )}
                 </div>
               </div>
-              <h4 className="text-xl font-bold mb-1">
-                {artist.name}
-              </h4>
-              <p className="mb-3">
-                {artist.artworkCount} Artworks
-              </p>
+              <h4 className="text-xl font-bold mb-1">{artist.name}</h4>
+              <p className="mb-3">{artist.artworkCount} Artworks</p>
               <Link
                 to={`/artist/${artist._id}`}
                 className="inline-block px-6 py-2 text-purple-600 dark:text-purple-400 font-semibold rounded-full border-2 border-purple-600 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-500 transition-all"

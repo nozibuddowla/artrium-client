@@ -24,7 +24,7 @@ const MyGallery = () => {
 
   const loadArtworks = async () => {
     const res = await axios.get(
-      `http://localhost:3000/my-gallery?email=${user?.email}`
+      `https://artrium-server.vercel.app/my-gallery?email=${user?.email}`
     );
     setMyArtworks(res.data);
   };
@@ -73,7 +73,7 @@ const MyGallery = () => {
 
     try {
       const res = await axios.put(
-        `http://localhost:3000/artworks/${id}`,
+        `https://artrium-server.vercel.app/artworks/${id}`,
         updatedData
       );
 
@@ -99,7 +99,9 @@ const MyGallery = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const res = await axios.delete(`http://localhost:3000/artworks/${id}`);
+        const res = await axios.delete(
+          `https://artrium-server.vercel.app/artworks/${id}`
+        );
 
         Swal.fire("Deleted!", "Your artwork has been removed.", "success");
         setMyArtworks(myArtworks.filter((art) => art._id !== id));

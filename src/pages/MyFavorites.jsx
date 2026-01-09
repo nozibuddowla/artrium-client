@@ -19,7 +19,7 @@ const MyFavorites = () => {
 
         if (user?.email) {
           const response = await axios.get(
-            `http://localhost:3000/favorites?email=${user.email}`
+            `https://artrium-server.vercel.app/favorites?email=${user.email}`
           );
           setFavorites(response.data);
         }
@@ -44,7 +44,9 @@ const MyFavorites = () => {
       confirmButtonText: "Yes, remove it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/favorites/${id}`, { method: "DELETE" })
+        fetch(`https://artrium-server.vercel.app/favorites/${id}`, {
+          method: "DELETE",
+        })
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount > 0) {

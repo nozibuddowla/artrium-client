@@ -76,7 +76,7 @@ const AddArtwork = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/artworks",
+        "https://artrium-server.vercel.app/artworks",
         artworkData
       );
 

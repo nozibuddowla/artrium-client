@@ -17,7 +17,9 @@ const ArtWorkDetails = () => {
   const loadArtworksDetails = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`http://localhost:3000/artworks/${id}`);
+      const res = await axios.get(
+        `https://artrium-server.vercel.app/artworks/${id}`
+      );
       setArtwork(res.data);
     } catch (err) {
       console.error("Failed to load artwork details", err);
@@ -40,7 +42,7 @@ const ArtWorkDetails = () => {
     try {
       // Axios patch: URL, then Data, then Config
       const response = await axios.patch(
-        `http://localhost:3000/artworks/${id}/like`,
+        `https://artrium-server.vercel.app/artworks/${id}/like`,
         {
           userEmail: user.email,
         }
@@ -78,7 +80,7 @@ const ArtWorkDetails = () => {
       userEmail: user.email,
     };
 
-    fetch("http://localhost:3000/favorites", {
+    fetch("https://artrium-server.vercel.app/favorites", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(favoriteItem),

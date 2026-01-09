@@ -17,11 +17,11 @@ const FeaturedArtworks = () => {
         setLoading(true);
 
         const response = await axios.get(
-          "http://localhost:3000/artworks/featured"
+          "https://artrium-server.vercel.app/artworks/featured"
         );
 
         setArtworks(response.data);
-      } catch (error) {
+      } catch (err) {
         console.error("Error fetching artworks:", err);
       } finally {
         setLoading(false);

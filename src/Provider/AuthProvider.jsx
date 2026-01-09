@@ -55,7 +55,7 @@ const AuthProvider = ({ children }) => {
         };
 
         try {
-          await axios.put("http://localhost:3000/users", userData);
+          await axios.put("https://artrium-server.vercel.app/users", userData);
         } catch (error) {
           console.error("Error syncing user to DB:", error);
         }

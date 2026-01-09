@@ -39,7 +39,7 @@ const ArtWorks = () => {
     try {
       setLoading(true);
       const res = await axios.get(
-        `http://localhost:3000/artworks?search=${search}&category=${selectedCategory}`
+        `https://artrium-server.vercel.app/artworks?search=${search}&category=${selectedCategory}`
       );
       setArtworks(res.data);
     } catch (err) {

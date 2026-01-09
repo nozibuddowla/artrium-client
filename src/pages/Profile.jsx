@@ -25,7 +25,7 @@ const Profile = () => {
         photoURL: photoUrl,
       });
 
-      await axios.put("http://localhost:3000/users", {
+      await axios.put("https://artrium-server.vercel.app/users", {
         email: user.email,
         displayName: name,
         photoURL: photoUrl,
