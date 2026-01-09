@@ -15,11 +15,13 @@ import MyGallery from "../pages/MyGallery";
 import MyFavorites from "../pages/MyFavorites";
 import TopArtists from "../components/TopArtists";
 import ArtistProfile from "../pages/ArtistProfile";
+import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     hydrateFallbackElement: <p>Loading...</p>,
     children: [
       {

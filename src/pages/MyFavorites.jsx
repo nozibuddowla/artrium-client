@@ -5,6 +5,7 @@ import MyContainer from "../components/MyContainer";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { Fade, Slide } from "react-awesome-reveal";
+import { Link } from "react-router";
 
 const MyFavorites = () => {
   const { user } = useContext(AuthContext);
@@ -74,21 +75,20 @@ const MyFavorites = () => {
               {favorites.map((item) => (
                 <div
                   key={item._id}
-                  className="card bg-base-100 shadow-xl border"
+                  className="group relative overflow-hidden rounded-2xl shadow-lg aspect-square"
                 >
-                  <figure className="px-4 pt-4">
-                    <img
-                      src={item.imageUrl}
-                      alt={item.title}
-                      className="rounded-xl h-48 w-full object-cover"
-                    />
-                  </figure>
-                  <div className="card-body">
-                    <h2 className="card-title">{item.title}</h2>
-                    <p>By {item.userName}</p>
-                    <p className="font-bold bg-linear-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                      ${item.price}
-                    </p>
+                  <img
+                    src={item.imageUrl}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
+                    <Link
+                      className="text-white text-xl font-bold"
+                      to={`/artwork/details/${item.artworkId}`}
+                    >
+                      {item.title}
+                    </Link>
+                    <p className="text-white">{item.userName}</p>
                     <div className="card-actions mt-4">
                       <button
                         onClick={() => handleUnfavorite(item._id)}

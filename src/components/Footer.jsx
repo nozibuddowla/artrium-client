@@ -3,6 +3,7 @@ import MyContainer from "./MyContainer";
 import { Link } from "react-router";
 import { FaFacebookF, FaXTwitter, FaYoutube } from "react-icons/fa6";
 import { LiaSlackHash } from "react-icons/lia";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -40,14 +41,30 @@ const Footer = () => {
                 size={20}
                 className="hover:text-purple-600 cursor-pointer"
               />
-              <FaYoutube
-                size={20}
-                className="hover:text-purple-600 cursor-pointer"
-              />
-              <FaFacebookF
-                size={20}
-                className="hover:text-purple-600 cursor-pointer"
-              />
+              <a
+                href="https://github.com/nozibuddowla/artrium-client"
+                target="_blank"
+              >
+                <FaGithub
+                  size={20}
+                  className="hover:text-purple-600 cursor-pointer"
+                />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/nozibuddowla/"
+                target="_blank"
+              >
+                <FaLinkedin
+                  size={20}
+                  className="hover:text-purple-600 cursor-pointer"
+                />
+              </a>
+              <a href="https://www.facebook.com/nozibuddowla/" target="_blank">
+                <FaFacebookF
+                  size={20}
+                  className="hover:text-purple-600 cursor-pointer"
+                />
+              </a>
             </div>
           </div>
         </footer>

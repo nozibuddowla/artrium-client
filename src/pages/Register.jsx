@@ -125,7 +125,7 @@ const Register = () => {
                   type="text"
                   name="username"
                   placeholder="Enter your username..."
-                  className="w-full px-6 py-4 bg-[#F7F7F7] rounded-full border-none focus:ring-2 focus:ring-gray-200 outline-none placeholder:text-gray-400 text-gray-700 transition-all"
+                  className="w-full px-6 py-4 border shadow-2xl rounded-full focus:ring-2 focus:ring-gray-200 outline-none transition-all"
                   required
                 />
               </div>
@@ -141,7 +141,7 @@ const Register = () => {
                   type="text"
                   name="photoUrl"
                   placeholder="Enter your photoURL..."
-                  className="w-full px-6 py-4 bg-[#F7F7F7] rounded-full border-none focus:ring-2 focus:ring-gray-200 outline-none placeholder:text-gray-400 text-gray-700 transition-all"
+                  className="w-full px-6 py-4 border shadow-2xl rounded-full focus:ring-2 focus:ring-gray-200 outline-none transition-all"
                   required
                 />
               </div>
@@ -157,7 +157,7 @@ const Register = () => {
                   type="email"
                   name="email"
                   placeholder="Enter your email address..."
-                  className="w-full px-6 py-4 bg-[#F7F7F7] rounded-full border-none focus:ring-2 focus:ring-gray-200 outline-none placeholder:text-gray-400 text-gray-700 transition-all"
+                  className="w-full px-6 py-4 border shadow-2xl rounded-full focus:ring-2 focus:ring-gray-200 outline-none transition-all"
                   required
                 />
               </div>
@@ -174,7 +174,7 @@ const Register = () => {
                     type={show ? "text" : "password"}
                     name="password"
                     placeholder="Enter your password..."
-                    className="w-full px-6 py-4 bg-[#F7F7F7] rounded-full border-none focus:ring-2 focus:ring-gray-200 outline-none placeholder:text-gray-400 text-gray-700 transition-all"
+                    className="w-full px-6 py-4 border shadow-2xl rounded-full focus:ring-2 focus:ring-gray-200 outline-none transition-all"
                     required
                   />
                   <button

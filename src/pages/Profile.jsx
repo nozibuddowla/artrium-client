@@ -192,7 +192,7 @@ const Profile = () => {
                   <div className="form-control">
                     <label className="label">
                       <span className="text-sm font-bold text-base-100">
-                        Description <span className="text-red-500">*</span>
+                        Bio <span className="text-red-500">*</span>
                       </span>
                     </label>
                     <textarea

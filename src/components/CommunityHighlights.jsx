@@ -168,7 +168,7 @@ const CommunityHighlights = () => {
           {highlights.map((highlight, index) => (
             <div
               key={index}
-              className="group bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-2xl transition-all overflow-hidden border border-gray-100"
+              className="group rounded-xl shadow-lg hover:shadow-2xl transition-all overflow-hidden border border-gray-100"
             >
               <div className="relative h-48 overflow-hidden">
                 <img
@@ -185,10 +185,10 @@ const CommunityHighlights = () => {
                 </div>
               </div>
               <div className="p-6">
-                <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-2 line-clamp-1">
+                <h4 className="text-xl font-bold mb-2 line-clamp-1">
                   {highlight.title}
                 </h4>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
+                <p className="text-sm mb-4 line-clamp-2">
                   {highlight.description}
                 </p>
                 <div className="flex items-center justify-between border-t border-gray-100 dark:border-slate-700 pt-4">
@@ -198,11 +198,11 @@ const CommunityHighlights = () => {
                       className="w-8 h-8 rounded-full"
                       alt=""
                     />
-                    <span className="text-sm font-medium dark:text-gray-200">
+                    <span className="text-sm font-medium">
                       {highlight.authorName}
                     </span>
                   </div>
-                  <span className="text-xs text-gray-400">
+                  <span className="text-xs">
                     {highlight.timeAgo}
                   </span>
                 </div>

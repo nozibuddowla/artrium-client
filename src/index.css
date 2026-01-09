@@ -2,9 +2,10 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-:root, html {
-  background-color: var(--fallback-b1,oklch(var(--b1)));
-  color: var(--fallback-bc,oklch(var(--bc)));
+:root,
+html {
+  background-color: var(--fallback-b1, oklch(var(--b1)));
+  color: var(--fallback-bc, oklch(var(--bc)));
 }
 
 body {
@@ -189,12 +190,20 @@ body {
   animation: float-slow 10s ease-in-out infinite;
 }
 
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+
 .art-404 {
-  font-size: 12rem;
+  font-size: clamp(8rem, 20vw, 15rem);
   font-weight: 900;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(to right, #9333ea, #4f46e5, #ec4899);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.1));
   background-clip: text;
   line-height: 1;
   animation: gradient-shift 3s ease infinite;

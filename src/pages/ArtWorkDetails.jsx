@@ -19,7 +19,7 @@ const ArtWorkDetails = () => {
       setLoading(true);
       const res = await axios.get(`http://localhost:3000/artworks/${id}`);
       setArtwork(res.data);
-    } catch (error) {
+    } catch (err) {
       console.error("Failed to load artwork details", err);
     } finally {
       setLoading(false);
@@ -31,39 +31,6 @@ const ArtWorkDetails = () => {
   }, []);
 
   // console.log(artworks);
-
-  // const handleLike = async () => {
-  //   if (!user) {
-  //     return Swal.fire("Error", "Please login to like this artwork!", "error");
-  //   }
-
-  //   try {
-  //     const response = await axios.patch(
-  //       `http://localhost:3000/artworks/${id}/like`,
-  //       {
-  //         userEmail: user.email,
-  //       }
-  //     );
-
-  //     if (response.data.modifiedCount > 0) {
-  //       // Logic to update the local state so the UI reflects the change
-  //       const adjustment = response.data.isLiked ? 1 : -1;
-  //       setArtwork({
-  //         ...artwork,
-  //         likes: (artwork.likes || 0) + adjustment,
-  //       });
-
-  //       if (response.data.isLiked) {
-  //         toast.success("Added to liked artworks!");
-  //       } else {
-  //         toast.info("Removed from liked artworks.");
-  //       }
-  //     }
-  //   } catch (err) {
-  //     console.error("Failed to like:", err);
-  //     toast.error("Something went wrong!");
-  //   }
-  // };
 
   const handleLike = async () => {
     if (!user) {

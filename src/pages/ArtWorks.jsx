@@ -3,19 +3,43 @@ import MyContainer from "../components/MyContainer";
 import { Link } from "react-router";
 import { motion } from "motion/react";
 import axios from "axios";
-import { CiUser } from "react-icons/ci";
 import { FaHeart, FaUser } from "react-icons/fa6";
+import { Fade } from "react-awesome-reveal";
 
 const ArtWorks = () => {
   const [artworks, setArtworks] = useState([]);
   const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [loading, setLoading] = useState(true);
 
-  const loadArtworks = async (searchQuery = "") => {
+  const categories = [
+    "All",
+    "Abstract",
+    "Landscape",
+    "Portrait",
+    "Surrealism",
+    "Contemporary",
+    "Nature",
+    "Botanical",
+    "Fantasy",
+    "Urban",
+    "Impressionism",
+    "Collage",
+    "Cultural",
+    "Street Photography",
+    "Floral",
+    "Realism",
+    "Conceptual",
+    "Seascape",
+    "Figurative",
+    "Abstract Expressionism",
+  ];
+
+  const loadArtworks = async () => {
     try {
       setLoading(true);
       const res = await axios.get(
-        `http://localhost:3000/artworks?search=${searchQuery}`
+        `http://localhost:3000/artworks?search=${search}&category=${selectedCategory}`
       );
       setArtworks(res.data);
     } catch (err) {
@@ -31,7 +55,7 @@ const ArtWorks = () => {
     }, 500);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [search]);
+  }, [search, selectedCategory]);
 
   if (loading) {
     return (
@@ -135,6 +159,24 @@ const ArtWorks = () => {
           )}
         </div>
 
+        {/* Category Tabs */}
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
+          {categories.map((cat) => (
+            <Fade key={cat}>
+              <button
+                onClick={() => setSelectedCategory(cat)}
+                className={`cursor-pointer px-6 py-2 rounded-full border transition-all ${
+                  selectedCategory === cat
+                    ? "bg-purple-600 text-white border-purple-600 shadow-md"
+                    : "bg-base-100 hover:border-purple-400"
+                }`}
+              >
+                {cat}
+              </button>
+            </Fade>
+          ))}
+        </div>
+
         {artworks.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {artworks.map((artwork) => (
@@ -188,13 +230,9 @@ const ArtWorks = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 bg-white/30 dark:bg-slate-800/30 backdrop-blur-md rounded-3xl border border-dashed border-gray-400 dark:border-slate-600">
-            <h3 className="text-xl font-medium text-gray-600 dark:text-gray-300">
-              No artworks found.
-            </h3>
-            <p className="text-gray-500 dark:text-gray-400 mt-2">
-              Try adjusting your search terms or keywords.
-            </p>
+          <div className="text-center py-20 backdrop-blur-md rounded-3xl border border-dashed border-gray-400 dark:border-slate-600">
+            <h3 className="text-xl font-medium">No artworks found.</h3>
+            <p className="mt-2">Try adjusting your search terms or keywords.</p>
             <button
               onClick={() => setSearch("")}
               className="btn btn-link text-purple-600 dark:text-purple-400 font-bold"
