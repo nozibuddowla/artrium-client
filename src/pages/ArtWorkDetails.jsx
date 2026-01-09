@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 const ArtWorkDetails = () => {
   const [artwork, setArtwork] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(false);
   const { id } = useParams();
   const { user } = useContext(AuthContext);
 
@@ -29,8 +30,24 @@ const ArtWorkDetails = () => {
   };
 
   useEffect(() => {
+    const checkFavoriteStatus = async () => {
+      if (user?.email && id) {
+        try {
+          const res = await axios.get(
+            `https://artrium-server.vercel.app/favorites?email=${user.email}`
+          );
+          // Check if current artwork ID exists in user's favorites list
+          const favorite = res.data.some((fav) => fav.artworkId === id);
+          setIsFavorite(favorite);
+        } catch (err) {
+          console.error("Error checking favorite status", err);
+        }
+      }
+    };
+
     loadArtworksDetails();
-  }, []);
+    checkFavoriteStatus();
+  }, [id, user]);
 
   // console.log(artworks);
 
@@ -69,8 +86,11 @@ const ArtWorkDetails = () => {
     }
   };
 
-  const handleFavorite = () => {
+  const handleFavorite = async () => {
     if (!user) return Swal.fire("Error", "Please login first!", "error");
+    if (isFavorite)
+      return Swal.fire("Info", "This is already in your collection.", "info");
+
     const favoriteItem = {
       artworkId: artwork._id,
       title: artwork.title,
@@ -80,36 +100,35 @@ const ArtWorkDetails = () => {
       userEmail: user.email,
     };
 
-    fetch("https://artrium-server.vercel.app/favorites", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(favoriteItem),
-    })
-      .then((res) => {
-        if (res.status === 400) {
-          Swal.fire(
-            "Note",
-            "This artwork is already in your favorites!",
-            "info"
-          );
-          return null;
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (data && data.insertedId) {
-          Swal.fire("Added!", "Added to your favorites.", "success");
-        }
-      })
-      .catch((err) => {
-        console.error("Error:", err);
-        Swal.fire("Error", "Something went wrong.", "error");
-      });
+    try {
+      const response = await axios.post(
+        "https://artrium-server.vercel.app/favorites",
+        favoriteItem
+      );
+
+      if (response.data.insertedId) {
+        setIsFavorite(true);
+        Swal.fire({
+          title: "Added!",
+          text: "Added to your favorites.",
+          icon: "success",
+          confirmButtonColor: "#C89446",
+        });
+      }
+    } catch (err) {
+      if (err.response && err.response.status === 400) {
+        setIsFavorite(true);
+        Swal.fire("Note", "This artwork is already in your favorites!", "info");
+      } else {
+        console.error("Error saving favorite:", err);
+        Swal.fire("Error", "Something went wrong while saving.", "error");
+      }
+    }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen flex justify-center items-center dark:bg-slate-900 transition-colors">
+      <div className="min-h-screen flex justify-center items-center transition-colors">
         <MyContainer>
           <Loader />
         </MyContainer>
@@ -187,9 +206,22 @@ const ArtWorkDetails = () => {
 
               <button
                 onClick={handleFavorite}
-                className="btn bg-[#C89446] text-white hover:bg-[#b0823b] border-none rounded-full px-8 shadow-lg shadow-yellow-900/20"
+                disabled={isFavorite}
+                className={`btn rounded-full px-8 shadow-lg transition-all duration-500 border-none ${
+                  isFavorite
+                    ? "bg-green-600 text-white cursor-default scale-105"
+                    : "bg-[#C89446] text-white hover:bg-[#b0823b] hover:scale-105 shadow-yellow-900/20"
+                }`}
               >
-                <FaStar /> Add to Favorites
+                {isFavorite ? (
+                  <>
+                    <FaStar className="text-yellow-300" /> In Favorites
+                  </>
+                ) : (
+                  <>
+                    <FaStar /> Add to Favorites
+                  </>
+                )}
               </button>
             </div>
 
