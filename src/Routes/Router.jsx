@@ -16,12 +16,14 @@ import MyFavorites from "../pages/MyFavorites";
 import TopArtists from "../components/TopArtists";
 import ArtistProfile from "../pages/ArtistProfile";
 import ErrorPage from "../pages/ErrorPage";
+import Loader from "../components/Loader";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     errorElement: <ErrorPage />,
+    hydrateFallbackElement: <Loader />,
     hydrateFallbackElement: <p>Loading...</p>,
     children: [
       {
